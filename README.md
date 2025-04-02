@@ -1,12 +1,13 @@
-##### **1. System Requirements**
+### **1. System Requirements**
 
 - **Operating System:** Windows, macOS, Linux  
 - **Python Version:** 3.x (recommended: 3.8 or higher)  
+- **Godot Version** 4.3
 - **Required Dependencies:** OpenCV (`cv2`), NumPy, Pillow, etc.  
 
-##### **2. Installation on Windows, Linux & macOS**  
+### **2. Installation on Windows, Linux & macOS**  
 
-###### **a) Install Python and Git**  
+#### **a) Install Python and Git**  
 
 If not already installed:  
 
@@ -39,7 +40,7 @@ sudo pacman -S git
 brew install git  
 ```
 
-###### **b) Clone the Repository**  
+#### **b) Clone the Repository**  
 
 Open a terminal and run:  
 
@@ -48,7 +49,7 @@ git clone https://github.com/YOUR_GITHUB_USERNAME/Scratch2Godot.git
 cd Scratch2Godot
 ```
 
-###### **c) Create a Virtual Environment and Install Dependencies**  
+#### **c) Create a Virtual Environment and Install Dependencies**  
 
 1. Create a virtual environment (optional but recommended):  
 
@@ -67,7 +68,8 @@ venv\Scripts\activate
 pip install -r requirements.txt  
 ```
 
-###### **d) Install OpenCV (`cv2`) Separately (if Errors Occur)**  
+#### **d) Install OpenCV (`cv2`) Separately (if Errors Occur)**  
+OpenCV (cv2) might not be the most optimal choice for this project, but it was chosen for its ease of integration. Future updates might explore other options.
 
 If `cv2` doesn't work directly, install it manually:  
 
@@ -85,8 +87,41 @@ sudo apt install python3-opencv
 brew install opencv  
 ```
 
-###### **e) Start the Tool**  
+### **3 Usage Instructions**
 
-```bash
-python main.py
-```
+To start the tool and convert a Scratch project to a Godot project, follow these steps:
+
+#### **a) Prepare Your Scratch Project (SB3 File)**
+    
+- Make sure your Scratch project file (with the extension `.sb3`) is accessible.
+        
+- Rename it to `ScratchProject.sb3` and place it inside the `temp` folder.
+        
+- Your folder structure should look like this:
+        
+         Scratch2Godot/ 
+         ├── main.py 
+         ├── temp/     
+             └── ScratchProject.sb3 
+         ├── utils/
+         └── resources/
+- Alternatively, you can specify the path to any SB3 file directly.
+        
+#### **b) Project Structure and Output**
+    
+- The resulting Godot project will be stored in the `temp` folder.
+        
+- You can open the generated project in Godot by navigating to the `temp` folder and selecting the main project file (`project.godot`).
+        
+#### **c) Customization**
+    
+- You can adjust the **project settings** by modifying the `settings` dictionary inside `main.py`:
+        
+```settings = {     
+"project_name": "Scratchgame",     
+"project_version": "1.0",     
+"project_author": "Scratch",     
+"project_description": "A Scratch project",     
+"variable_style": "normal",  # Not yet Working; Options: "normal", "large", "small", "just Text" }```
+        
+- These settings will be applied during the conversion process.

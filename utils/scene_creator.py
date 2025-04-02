@@ -85,12 +85,12 @@ def create_main_tscn(json_file: dict, temp_dir: str, settings, zip_file: dict) -
             main_scene.resource += f'[ext_resource type="PackedScene" uid="uid://sprite-{sprite["name"]}" path="res://sprites/{sprite["name"]}.tscn" id="id-sprite-{sprite["name"]}"]\n'
             main_scene.nodes += f'\n[node name="{sprite["name"]}" parent="." instance=ExtResource("id-sprite-{sprite["name"]}")]\nposition = Vector2({sprite["x"]}, {sprite["y"] * -1})\nrotation = {math.radians(sprite["direction"] - 90)}\nz_index = {sprite["layerOrder"]}'
     open(f'{temp_dir}/Godotgame/main.tscn', "w").write(main_scene.load_steps + main_scene.resource + main_scene.background + main_scene.standart + main_scene.nodes)
-    shutil.copy("resouces/icon.svg", f'{temp_dir}/Godotgame/icon.svg')
-    shutil.copy("resouces/controll.gd", f'{temp_dir}/Godotgame/assets/controll.gd')
-    shutil.copy("resouces/correctures.gd", f'{temp_dir}/Godotgame/assets/correctures.gd')
-    shutil.copy("resouces/effects.gdshader", f'{temp_dir}/Godotgame/assets/effects.gdshader')
-    shutil.copy("resouces/bubble.tscn", f'{temp_dir}/Godotgame/assets/bubble.tscn')
-    shutil.copy("resouces/bubble.gd", f'{temp_dir}/Godotgame/scripts/bubble.gd')
+    shutil.copy("resources/icon.svg", f'{temp_dir}/Godotgame/icon.svg')
+    shutil.copy("resources/controll.gd", f'{temp_dir}/Godotgame/assets/controll.gd')
+    shutil.copy("resources/correctures.gd", f'{temp_dir}/Godotgame/assets/correctures.gd')
+    shutil.copy("resources/effects.gdshader", f'{temp_dir}/Godotgame/assets/effects.gdshader')
+    shutil.copy("resources/bubble.tscn", f'{temp_dir}/Godotgame/assets/bubble.tscn')
+    shutil.copy("resources/bubble.gd", f'{temp_dir}/Godotgame/scripts/bubble.gd')
 #[node name="Node2D" parent="CanvasLayer/VBoxContainer/AspectRatioContainer" instance=ExtResource("3_7axgv")]
 #position = Vector2(0, 3)
 
