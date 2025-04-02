@@ -1,3 +1,8 @@
+## Scratch2Godot - A Work in Progress 🚧
+Scratch2Godot is a converter that transforms Scratch projects (.sb3) into Godot projects. The goal is to combine the simplicity of Scratch's block-based programming with the performance and flexibility of Godot.
+
+⚠️ Important Note: This tool is still under development and not yet fully functional. Some features are experimental or not implemented. Feedback and suggestions are highly appreciated!
+
 ### **1. System Requirements**
 
 - **Operating System:** Windows, macOS, Linux  
