@@ -1,0 +1,52 @@
+[gd_scene load_steps=12 format=3 uid="uid://b4ytajwc8marg"]
+
+[ext_resource type="SpriteFrames" path="res://costumes/Animation-Stage.tres" id="id-frame-Stage"]
+[ext_resource type="PackedScene" path="res://sprites/bubble.tscn" id="id-sprite-bubble"]
+[ext_resource type="PackedScene" path="res://sprites/bubble2.tscn" id="id-sprite-bubble2"]
+[ext_resource type="PackedScene" path="res://sprites/bubble3.tscn" id="id-sprite-bubble3"]
+[ext_resource type="PackedScene" path="res://sprites/bubble4.tscn" id="id-sprite-bubble4"]
+[ext_resource type="PackedScene" path="res://sprites/dead.tscn" id="id-sprite-dead"]
+[ext_resource type="PackedScene" path="res://sprites/fish1.tscn" id="id-sprite-fish1"]
+[ext_resource type="PackedScene" path="res://sprites/fish2.tscn" id="id-sprite-fish2"]
+[ext_resource type="PackedScene" path="res://sprites/fish3.tscn" id="id-sprite-fish3"]
+[ext_resource type="PackedScene" path="res://sprites/fish4.tscn" id="id-sprite-fish4"]
+[ext_resource type="PackedScene" path="res://sprites/position.tscn" id="id-sprite-position"]
+
+[node name="Background" type="AnimatedSprite2D"]
+z_index = -4096
+sprite_frames = ExtResource("id-frame-Stage")
+animation = &"backdrop1"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="scripts" type="Node2D" parent="."]
+
+[node name="fish1" parent="." instance=ExtResource("id-sprite-fish1")]
+position = Vector2(-50.7351, 22.9086)
+
+[node name="fish2" parent="." instance=ExtResource("id-sprite-fish2")]
+position = Vector2(58.7903, -49.3658)
+
+[node name="fish3" parent="." instance=ExtResource("id-sprite-fish3")]
+position = Vector2(63.4577, -16.3844)
+
+[node name="fish4" parent="." instance=ExtResource("id-sprite-fish4")]
+position = Vector2(-61.6289, -17.1342)
+
+[node name="bubble" parent="." instance=ExtResource("id-sprite-bubble")]
+position = Vector2(-160.112, -177.524)
+
+[node name="bubble2" parent="." instance=ExtResource("id-sprite-bubble2")]
+position = Vector2(-61.6289, -43.1342)
+
+[node name="bubble3" parent="." instance=ExtResource("id-sprite-bubble3")]
+position = Vector2(-100, -181)
+
+[node name="bubble4" parent="." instance=ExtResource("id-sprite-bubble4")]
+position = Vector2(-61.6289, -21.1342)
+
+[node name="position" parent="." instance=ExtResource("id-sprite-position")]
+position = Vector2(36, -140)
+
+[node name="dead" parent="." instance=ExtResource("id-sprite-dead")]
+position = Vector2(-221, 180)

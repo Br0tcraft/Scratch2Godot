@@ -19,3 +19,16 @@ def create_folders(temp_dir: str) -> None:
     os.makedirs(temp_dir + "/Godotgame/.godot", exist_ok=True)
     os.makedirs(temp_dir + "/Godotgame/.godot/imported", exist_ok=True)
     os.makedirs(temp_dir + "/Godotgame/assets", exist_ok=True)
+
+def get_loop_varname(depth: int) -> str:
+    base = "ijklmnopqrstuvwxyz"
+    length = len(base)
+
+    if depth <= length:
+        return base[depth - 1]
+
+    name = ""
+    while depth >= 0:
+        name = base[(depth % length) - 1] + name
+        depth = (depth // length) - 1
+    return name

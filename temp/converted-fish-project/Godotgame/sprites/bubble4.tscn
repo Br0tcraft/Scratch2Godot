@@ -1,0 +1,35 @@
+[gd_scene load_steps=2 format=3 uid="uid://sprite-bubble4"]
+
+[ext_resource type="SpriteFrames" uid="uid://9117217085886615377" path="res://costumes/Animation-bubble4.tres" id="frames-bubble4"]
+[ext_resource type="Script" path="res://scripts/sprite-bubble4.gd" id="id_sprite-bubble4"]
+[ext_resource type="Shader" path="res://assets/effects.gdshader" id="id_shader_bubble4"]
+[ext_resource type="PackedScene" uid="uid://bubble" path="res://assets/bubble.tscn" id="bubble"]
+[ext_resource type="Script" path="res://scripts/bubble4-event_whenflagclicked-1ma5b.gd" id="id_bubble4-event_whenflagclicked-1ma5b"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bubble4"]
+shader = ExtResource("id_shader_bubble4")
+shader_parameter/color_shift = 0.0
+shader_parameter/fisheye = 0.0
+shader_parameter/whirl = 0.0
+shader_parameter/pixelate = 0.0
+shader_parameter/mosaic = 0.0
+shader_parameter/brightness = 0.0
+shader_parameter/ghost = 0.0
+shader_parameter/sprite_size = 10.0
+
+[node name="bubble4" type="Node2D"]
+material = SubResource("ShaderMaterial_bubble4")
+script = ExtResource("id_sprite-bubble4")
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("frames-bubble4")
+animation = &"bubble"
+[node name="CharacterBody2D" type="CharacterBody2D" parent="Sprite"]
+[node name="Collision-bubble" type="CollisionPolygon2D" parent="Sprite/CharacterBody2D"]
+polygon = PackedVector2Array(7, 0, 6, 1, 5, 1, 1, 5, 1, 6, 0, 7, 0, 16, 1, 17, 1, 18, 4, 21, 5, 21, 6, 22, 7, 22, 8, 23, 15, 23, 16, 22, 17, 22, 18, 21, 19, 21, 22, 18, 22, 17, 23, 16, 23, 7, 22, 6, 22, 5, 18, 1, 17, 1, 16, 0, 7, 0)
+position = Vector2(-12, -12)
+[node name="bubble" parent="." instance=ExtResource("bubble")]
+visible = false
+scale = Vector2(0.6, 0.6)
+[node name="scripts" type="Node2D" parent="Sprite"]
+[node name="event_whenflagclicked-1ma5b" type="Node2D" parent="Sprite/scripts"]
+script = ExtResource("id_bubble4-event_whenflagclicked-1ma5b")

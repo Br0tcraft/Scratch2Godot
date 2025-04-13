@@ -1,0 +1,35 @@
+[gd_scene load_steps=2 format=3 uid="uid://sprite-position"]
+
+[ext_resource type="SpriteFrames" uid="uid://9028428668613198281" path="res://costumes/Animation-position.tres" id="frames-position"]
+[ext_resource type="Script" path="res://scripts/sprite-position.gd" id="id_sprite-position"]
+[ext_resource type="Shader" path="res://assets/effects.gdshader" id="id_shader_position"]
+[ext_resource type="PackedScene" uid="uid://bubble" path="res://assets/bubble.tscn" id="bubble"]
+[ext_resource type="Script" path="res://scripts/position-event_whenflagclicked-xdrcj.gd" id="id_position-event_whenflagclicked-xdrcj"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_position"]
+shader = ExtResource("id_shader_position")
+shader_parameter/color_shift = 0.0
+shader_parameter/fisheye = 0.0
+shader_parameter/whirl = 0.0
+shader_parameter/pixelate = 0.0
+shader_parameter/mosaic = 0.0
+shader_parameter/brightness = 0.0
+shader_parameter/ghost = 0.0
+shader_parameter/sprite_size = 10.0
+
+[node name="position" type="Node2D"]
+material = SubResource("ShaderMaterial_position")
+script = ExtResource("id_sprite-position")
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("frames-position")
+animation = &"costume1"
+[node name="CharacterBody2D" type="CharacterBody2D" parent="Sprite"]
+[node name="Collision-costume1" type="CollisionPolygon2D" parent="Sprite/CharacterBody2D"]
+polygon = PackedVector2Array(0, 0, 0, 17, 19, 17, 19, 0, 0, 0)
+position = Vector2(-10, -9)
+[node name="bubble" parent="." instance=ExtResource("bubble")]
+visible = false
+scale = Vector2(0.6, 0.6)
+[node name="scripts" type="Node2D" parent="Sprite"]
+[node name="event_whenflagclicked-xdrcj" type="Node2D" parent="Sprite/scripts"]
+script = ExtResource("id_position-event_whenflagclicked-xdrcj")

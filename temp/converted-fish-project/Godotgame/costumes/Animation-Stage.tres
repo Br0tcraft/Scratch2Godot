@@ -1,0 +1,14 @@
+[gd_resource type="SpriteFrames" load_steps=1 format=3 uid="uid://frames-Stage"]
+
+[ext_resource type="Texture2D" uid="uid://7141625bba8ec3ce5f285d27989560a1" path="res://7141625bba8ec3ce5f285d27989560a1.png" id="id_7141625bba8ec3ce5f285d27989560a1"]
+
+[resource]
+animations = [{
+"frames":[{
+"duration": 1.0,
+"texture": ExtResource("id_7141625bba8ec3ce5f285d27989560a1")
+}],
+"loop": false,
+"name": &"backdrop1",
+"speed": 0.0
+}]

@@ -1,0 +1,35 @@
+[gd_scene load_steps=2 format=3 uid="uid://sprite-fish2"]
+
+[ext_resource type="SpriteFrames" uid="uid://7243326759071370161" path="res://costumes/Animation-fish2.tres" id="frames-fish2"]
+[ext_resource type="Script" path="res://scripts/sprite-fish2.gd" id="id_sprite-fish2"]
+[ext_resource type="Shader" path="res://assets/effects.gdshader" id="id_shader_fish2"]
+[ext_resource type="PackedScene" uid="uid://bubble" path="res://assets/bubble.tscn" id="bubble"]
+[ext_resource type="Script" path="res://scripts/fish2-event_whenflagclicked-4ndnh.gd" id="id_fish2-event_whenflagclicked-4ndnh"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fish2"]
+shader = ExtResource("id_shader_fish2")
+shader_parameter/color_shift = 0.0
+shader_parameter/fisheye = 0.0
+shader_parameter/whirl = 0.0
+shader_parameter/pixelate = 0.0
+shader_parameter/mosaic = 0.0
+shader_parameter/brightness = 0.0
+shader_parameter/ghost = 0.0
+shader_parameter/sprite_size = 10.0
+
+[node name="fish2" type="Node2D"]
+material = SubResource("ShaderMaterial_fish2")
+script = ExtResource("id_sprite-fish2")
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("frames-fish2")
+animation = &"fishTile_081"
+[node name="CharacterBody2D" type="CharacterBody2D" parent="Sprite"]
+[node name="Collision-fishTile_081" type="CollisionPolygon2D" parent="Sprite/CharacterBody2D"]
+polygon = PackedVector2Array(44, 15, 43, 16, 38, 16, 37, 17, 35, 17, 34, 18, 32, 18, 31, 19, 30, 19, 29, 20, 28, 20, 27, 21, 26, 21, 25, 22, 25, 23, 23, 25, 21, 23, 21, 22, 20, 22, 19, 21, 16, 21, 15, 22, 13, 22, 10, 25, 9, 25, 7, 27, 6, 27, 3, 30, 3, 34, 5, 36, 6, 36, 8, 38, 9, 38, 12, 41, 13, 41, 14, 42, 20, 42, 21, 43, 21, 44, 22, 44, 23, 45, 24, 45, 25, 46, 26, 46, 27, 47, 30, 47, 31, 48, 42, 48, 43, 47, 44, 47, 44, 46, 45, 45, 46, 45, 47, 44, 49, 44, 50, 43, 51, 43, 52, 42, 53, 42, 59, 36, 59, 35, 60, 34, 60, 28, 58, 26, 58, 25, 56, 23, 55, 23, 53, 21, 52, 21, 51, 20, 51, 16, 50, 15, 44, 15)
+position = Vector2(-32, -32)
+[node name="bubble" parent="." instance=ExtResource("bubble")]
+visible = false
+scale = Vector2(0.6, 0.6)
+[node name="scripts" type="Node2D" parent="Sprite"]
+[node name="event_whenflagclicked-4ndnh" type="Node2D" parent="Sprite/scripts"]
+script = ExtResource("id_fish2-event_whenflagclicked-4ndnh")

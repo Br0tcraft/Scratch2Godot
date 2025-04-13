@@ -2,11 +2,19 @@ import subprocess
 from PIL import Image
 import numpy as np
 import cv2
+def resize_png_half(original_path: str, resized_path: str) -> None:
+    try:
+        with Image.open(original_path) as img:
+            new_size = (img.width // 2, img.height // 2)
+            resized_img = img.resize(new_size, Image.ANTIALIAS)
+            resized_img.save(resized_path, "PNG")
+    except Exception as e:
+        print("resize_png_half: ", e)
 
 def jpg_to_png(jpg_path: str, png_path: str) -> None:
     with Image.open(jpg_path) as im:
         im.save(png_path, "PNG")
-
+        
 def svg_to_png(svg_path: str, png_path: str, fonts: dict) -> None:
     def replace_font_names_in_svg():
         try:

@@ -1,13 +1,41 @@
-## Scratch2Godot - A Work in Progress 🚧
-Scratch2Godot is a converter that transforms Scratch projects (.sb3) into Godot projects. The goal is to combine the simplicity of Scratch's block-based programming with the performance and flexibility of Godot.
+## Scratch2Godot - Work in Progress
+Scratch2Godot is a converter that transforms Scratch projects (.sb3) into Godot projects. 
 
-⚠️ Important Note: This tool is still under development and not yet fully functional. Some features are experimental or not implemented. Feedback and suggestions are highly appreciated!
+An example Scratch game and its converted Godot version can be found in the temp folder.
+
+Important Note: This tool is still in development and not fully functional. Some features are experimental or not yet implemented.
+
+### Features (Current & Planned)
+
+**Implemented:**
+
+- Detection of all sprites and backgrounds  
+- Full support for motion blocks (Scratch & PenguinMod)  
+- Support for all Scratch looks blocks  
+    - Some PenguinMod looks blocks are supported  
+    - Special speech bubble features are not yet implemented (standard bubbles work)  
+    - Visual effects exist in code but are not yet applied to sprite nodes  
+- Full support for all operator blocks in Scratch  
+- Partial support for control blocks:
+    - `wait (1) seconds`  
+    - `wait (1) seconds or until <>`  
+    - `repeat (10)`  
+    - `forever`  
+    - `if <> then {}`  
+    - `if <> then {} else {}`  
+    - `repeat until <> {}`  
+    - `while <> {}`  
+
+**In development or planned:**
+
+- Full support for all other block categories (e.g. sensing, events, variables)  
+- Improved error handling and stability  
 
 ### **1. System Requirements**
 
 - **Operating System:** Windows, macOS, Linux  
 - **Python Version:** 3.x (recommended: 3.8 or higher)  
-- **Godot Version** 4.3
+- **Godot Version:** 4.x (recommended 4.3)
 - **Required Dependencies:** OpenCV (`cv2`), NumPy, Pillow, etc.  
 
 ### **2. Installation on Windows, Linux & macOS**  
@@ -50,7 +78,7 @@ brew install git
 Open a terminal and run:  
 
 ```bash
-git clone https://github.com/YOUR_GITHUB_USERNAME/Scratch2Godot.git
+git clone https://github.com/br0tcraft/Scratch2Godot.git
 cd Scratch2Godot
 ```
 
@@ -74,7 +102,7 @@ pip install -r requirements.txt
 ```
 
 #### **d) Install OpenCV (`cv2`) Separately (if Errors Occur)**  
-OpenCV (cv2) might not be the most optimal choice for this project, but it was chosen for its ease of integration. Future updates might explore other options.
+OpenCV (cv2) may not be the most optimal choice for this project, but it was chosen for its ease of integration. Future updates might explore other options.
 
 If `cv2` doesn't work directly, install it manually:  
 
@@ -92,7 +120,7 @@ sudo apt install python3-opencv
 brew install opencv  
 ```
 
-### **3 Usage Instructions**
+### **3. Usage Instructions**
 
 To start the tool and convert a Scratch project to a Godot project, follow these steps:
 
@@ -104,12 +132,12 @@ To start the tool and convert a Scratch project to a Godot project, follow these
         
 - Your folder structure should look like this:
         
-         Scratch2Godot/ 
-         ├── main.py 
-         ├── temp/     
-             └── ScratchProject.sb3 
-         ├── utils/
-         └── resources/
+         Scratch2Godot/
+        ├── main.py
+        ├── temp/
+        │     └── ScratchProject.sb3
+        ├── utils/
+        └── resources/
 - Alternatively, you can specify the path to any SB3 file directly.
         
 #### **b) Project Structure and Output**
@@ -127,6 +155,7 @@ To start the tool and convert a Scratch project to a Godot project, follow these
 "project_version": "1.0",     
 "project_author": "Scratch",     
 "project_description": "A Scratch project",     
-"variable_style": "normal",  # Not yet Working; Options: "normal", "large", "small", "just Text" }```
+"fps": "30"
+}```
         
 - These settings will be applied during the conversion process.
