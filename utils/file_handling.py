@@ -60,7 +60,7 @@ def collision_shape2d(png_path: str) -> str:
         godot_polygon = ", ".join([f"{x}, {y}" for x, y in points])
         return f"PackedVector2Array({godot_polygon})\nposition = Vector2({img.size[0] // -2}, {img.size[1] // -2})"
     except:
-        return "PackedVector2Array(0, 0, 0)"
+        return "PackedVector2Array(0, 0, 0, 0, 0, 0)"
     
 def import_file(name: str, uid: str) -> str:
     '''This is uninteresting, it makes just an .import file for every costume with stuff i don't understand (This is copy paste)'''

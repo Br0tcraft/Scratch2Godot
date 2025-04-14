@@ -132,14 +132,20 @@ def create_Object_scene(sprite_data: dict, temp_dir: str, zip_file) -> str:
         f'shader_parameter/brightness = 0.0\n'
         f'shader_parameter/ghost = 0.0\n'
         f'shader_parameter/sprite_size = 10.0\n'
+        f'shader_parameter/saturation = null\n'
+        f'shader_parameter/opaque = null\n'
+        f'shader_parameter/red = null\n'
+        f'shader_parameter/green = null\n'
+        f'shader_parameter/blue = null\n'
+        f'shader_parameter/tint_color = Color(1, 1, 1, 1)\n'
         # nodes
         f'\n[node name="{sprite_data["name"]}" type="Node2D"]\n'
-        f'material = SubResource("ShaderMaterial_{sprite_data["name"]}")\n'
         f'script = ExtResource("id_sprite-{sprite_data["name"]}")\n'
         f'[node name="Sprite" type="AnimatedSprite2D" parent="."]\n'
         f'sprite_frames = ExtResource("{sprite.spriteframe}")\n'
         f'animation = &"{sprite_data["costumes"][sprite_data["currentCostume"]]["name"]}"\n'
-        f'[node name="CharacterBody2D" type="CharacterBody2D" parent="Sprite"]'
+        f'material = SubResource("ShaderMaterial_{sprite_data["name"]}")\n'
+        f'[node name="Area2D" type="Area2D" parent="Sprite"]'
     )
     costume = SimpleNamespace()
     animation.ext = ""
@@ -166,10 +172,13 @@ def create_Object_scene(sprite_data: dict, temp_dir: str, zip_file) -> str:
             open(f"{temp_dir}/Godotgame/{costume.name}.import", "w").write(import_file(costume.name, costume.name[:-4]))
 
         # Add collision shape
-        sprite.nodes += f'\n[node name="Collision-{costume_data["name"]}" type="CollisionPolygon2D" parent="Sprite/CharacterBody2D"]'
+        sprite.nodes += f'\n[node name="Collision-{costume_data["name"]}" type="CollisionPolygon2D" parent="Sprite/Area2D"]'
         costume.collision = collision_shape2d(f"{temp_dir}/Godotgame/{costume.name}")
         sprite.nodes += f'\npolygon = {costume.collision}'
-
+        if sprite_data["costumes"][sprite_data["currentCostume"]] != costume_data:
+            sprite.nodes += f'\ndisabled = true'
+        else:
+            sprite.nodes += f'\ndisabled = false'
         # Add animation frames
         animation.ext += f'\n[ext_resource type="Texture2D" uid="uid://{costume.name[:-4]}" path="res://{costume.name}" id="id_{costume.name[:-4]}"]'
         animation.res += (
@@ -179,7 +188,6 @@ def create_Object_scene(sprite_data: dict, temp_dir: str, zip_file) -> str:
             f'"loop": false,\n"name": &"{costume_data["name"]}",\n"speed": 0.0\n'
             '}, '
         )
-
     # Add bubble and scripts
     sprite.resource += '\n[ext_resource type="PackedScene" uid="uid://bubble" path="res://assets/bubble.tscn" id="bubble"]'
     sprite.nodes += '\n[node name="bubble" parent="." instance=ExtResource("bubble")]'
@@ -197,7 +205,7 @@ def create_Object_scene(sprite_data: dict, temp_dir: str, zip_file) -> str:
         sprite.resource += f'\n[ext_resource type="Script" path="res://scripts/{sprite_data["name"]}-{name}.gd" id="id_{sprite_data["name"]}-{name}"]'
         sprite.nodes += f'\n[node name="{name}" type="Node2D" parent="Sprite/scripts"]\nscript = ExtResource("id_{sprite_data["name"]}-{name}")'
         create_gd_script(sprite_data["blocks"], top_level, f"{temp_dir}/Godotgame/scripts/", f"{sprite_data['name']}-{name}")
-
+    sprite.nodes += '[connection signal="body_entered" from="Sprite/Area2D" to="." method="_body_entered"]\n[connection signal="input_event" from="Sprite/Area2D" to="." method="_input_event"]'
     # Finalize animation and scene files
     animation.res = animation.res.rstrip(", ") + "]"
     final_scene = sprite.load_steps + sprite.resource + "\n" + sprite.nodes

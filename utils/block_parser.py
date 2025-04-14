@@ -253,14 +253,14 @@ def convert_blocks(blocks: dict, block: dict, code: str, name: str):
                                     code += spaces + ' object.position = Vector2(cameraPos.x - get_viewport().size.x / 2 + get_viewport().size.x / 2, cameraPos.y - get_viewport().size.y / 2 + get_viewport().size.y / 2)\n'
                         except:
                             code += "\n" + spaces + '''print(Soemthing was wrong with the scratch-file. The Block 'move to stage [!]' has a not valid value)\n'''
-                            code += "\n" + spaces + '''correctur.help()\n'''
+                            code += spaces + '''correctur.help()\n'''
 
                     # look_blocks
                     case "looks_sayforsecs":
                         var["message"] = '""'
                         var["secs"] = 0
                         code += "\n" + spaces + 'message = correctur.ms('+ str(repeat_content(blocks, block, "MESSAGE")) + f', "string", "res://scripts/{name}.gd", "say (!) for () seconds")\n'
-                        code += "\n" + spaces + 'secs = correctur.ms('+ str(repeat_content(blocks, block, "SECS")) + f', "float", "res://scripts/{name}.gd", "say () for (!) seconds")\n'
+                        code += spaces + 'secs = correctur.ms('+ str(repeat_content(blocks, block, "SECS")) + f', "float", "res://scripts/{name}.gd", "say () for (!) seconds")\n'
                         code += spaces + f'$"../../../bubble".write(message, secs)\n'
                         code += spaces + f'await get_tree().create_timer(secs).timeout\n'
                     case "looks_say":
@@ -272,7 +272,7 @@ def convert_blocks(blocks: dict, block: dict, code: str, name: str):
                         var["message"] = '""'
                         var["secs"] = 0
                         code += "\n" + spaces + 'message = correctur.ms('+ str(repeat_content(blocks, block, "MESSAGE")) + f', "string", "res://scripts/{name}.gd", "think (!) for () seconds")\n'
-                        code += "\n" + spaces + 'secs = correctur.ms('+ str(repeat_content(blocks, block, "SECS")) + f', "float", "res://scripts/{name}.gd", "think () for (!) seconds")\n'
+                        code += spaces + 'secs = correctur.ms('+ str(repeat_content(blocks, block, "SECS")) + f', "float", "res://scripts/{name}.gd", "think () for (!) seconds")\n'
                         code += spaces + f'$"../../../bubble".write(message, secs, false)\n'
                         code += spaces + f'await get_tree().create_timer(secs).timeout\n'
                     case "looks_think":
@@ -287,12 +287,16 @@ def convert_blocks(blocks: dict, block: dict, code: str, name: str):
                     case "looks_switchcostumeto":
                         var["costume"] = '""'
                         code += "\n" + spaces + 'costume = correctur.ms('+ str(repeat_content(blocks, block, "COSTUME")) + f', "string", "res://scripts/{name}.gd", "switch costume to (!)")\n'
+                        code += spaces + f'$"../..".get_node("Area2D/Collision-" + animation.animation).disabled = true\n'
                         code += spaces + f'if str(costume).is_valid_int():\n'
                         code += spaces + f'\tanimation.play(animation.sprite_frames.get_animation_names()[int(costume) % animation.sprite_frames.get_animation_names().size()])\n'
                         code += spaces + f'elif costume in animation.sprite_frames.get_animation_names():\n'
                         code += spaces + f'\tanimation.play(str(costume))\n'
+                        code += spaces + f'$"../..".get_node("Area2D/Collision-" + animation.animation).disabled = false\n'
                     case "looks_nextcostume":
+                        code += "\n" + spaces + f'$"../..".get_node("Area2D/Collision-" + animation.animation).disabled = true\n'
                         code += spaces + f'animation.play(animation.sprite_frames.get_animation_names()[((animation.sprite_frames.get_animation_names().find(animation.animation) + 1) % animation.sprite_frames.get_animation_names().size())])\n'
+                        code += spaces + f'$"../..".get_node("Area2D/Collision-" + animation.animation).disabled = false\n'
                     case "looks_switchbackdropto":
                         var["costume"] = '""'
                         code += "\n" + spaces + 'costume = correctur.ms('+ str(repeat_content(blocks, block, "COSTUME")) + f', "string", "res://scripts/{name}.gd", "switch costume to (!)")\n'
