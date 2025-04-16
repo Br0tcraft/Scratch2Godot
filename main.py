@@ -44,4 +44,4 @@ def Convert_game(sb3_file: str, settings: dict) -> str:
         print("Invalid JSON in project.json")
 
 #Convert_game("temp/Fish.sb3", settings)
-Convert_game("temp/ScratchProject.sb3", settings)
+Convert_game("temp/ScratchProject.pmp", settings)

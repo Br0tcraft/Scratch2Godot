@@ -14,7 +14,7 @@ Important Note: This tool is still in development and not fully functional. Some
 - Support for all Scratch looks blocks  
     - Some PenguinMod looks blocks are supported  
     - Special speech bubble features are not yet implemented (standard bubbles work)  
-    - Scratch effects are present but have not yet been tested
+    - Scratch effects are present but not working perfect
 - Full support for all operator blocks in Scratch  
 - Partial support for control blocks:
     - `wait (1) seconds`  
@@ -25,7 +25,7 @@ Important Note: This tool is still in development and not fully functional. Some
     - `if <> then {} else {}`  
     - `repeat until <> {}`  
     - `while <> {}` 
-- Only one event block works: “When flag is clicked”
+- Only two event blocks works: “When flag is clicked” and "When this sprite clicked"
 
 **In development or planned:**
 

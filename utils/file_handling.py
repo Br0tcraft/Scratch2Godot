@@ -52,15 +52,15 @@ def collision_shape2d(png_path: str) -> str:
         _, binary = cv2.threshold(img_array, 1, 255, cv2.THRESH_BINARY)
         contours, _ = cv2.findContours(binary, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         if not contours:
-            return "PackedVector2Array(0, 0, 0)"
+            return "PackedVector2Array()\nposition = Vector2(0, 0)"
         contour = max(contours, key=cv2.contourArea)
-        points = [(int(pt[0][0]), int(pt[0][1])) for pt in contour]
-        if points[0] != points[-1]:
-            points.append(points[0])
+        hull = cv2.convexHull(contour)  # <--- Wichtig!
+        points = [(int(pt[0][0]), int(pt[0][1])) for pt in hull]
         godot_polygon = ", ".join([f"{x}, {y}" for x, y in points])
         return f"PackedVector2Array({godot_polygon})\nposition = Vector2({img.size[0] // -2}, {img.size[1] // -2})"
     except:
-        return "PackedVector2Array(0, 0, 0, 0, 0, 0)"
+        return "PackedVector2Array()\nposition = Vector2(0, 0)"
+
     
 def import_file(name: str, uid: str) -> str:
     '''This is uninteresting, it makes just an .import file for every costume with stuff i don't understand (This is copy paste)'''

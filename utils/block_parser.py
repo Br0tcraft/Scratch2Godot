@@ -1,5 +1,5 @@
 from utils.helpers import get_loop_varname
-def convert_blocks(blocks: dict, block: dict, code: str, name: str):
+def convert_blocks(blocks: dict, block: dict, code: str, name: str, spaces: int):
     var = {}
     def convert_block(blocks: dict, block: dict, space: int, code: str, name: str):
         spaces = "\t" * space
@@ -360,7 +360,7 @@ def convert_blocks(blocks: dict, block: dict, code: str, name: str):
                         code += spaces + '\tmain.get_node_or_null(sprite).visible = false\n'
                     case "looks_changeeffectby":
                         var["effect"] = '0'
-                        code += "\n" + spaces + 'effect = correctur.ms('+ str(repeat_content(blocks, block, "VALUE")) + f', "float", "res://scripts/{name}.gd", "change effect [-----] by (!)")\n'
+                        code += "\n" + spaces + 'effect = correctur.ms('+ str(repeat_content(blocks, block, "CHANGE")) + f', "float", "res://scripts/{name}.gd", "change effect [-----] by (!)")\n'
                         match block["fields"]["EFFECT"][0]:
                             case "COLOR":
                                 code += spaces + 'mat.set_shader_parameter("color_shift", effect)\n'
@@ -530,7 +530,7 @@ def convert_blocks(blocks: dict, block: dict, code: str, name: str):
         
 
         return code
-    code = convert_block(blocks, block, 1, code, name)
+    code = convert_block(blocks, block, spaces, code, name)
     for key, value in var.items():
         code = f'var {key} = {value}\n' + str(code)
     return code
@@ -709,19 +709,58 @@ def create_gd_script(blocks: dict, block_opcode: str, path: str, name: str) -> N
     main += '\tmain = $"../../../.."\n\tobject = $"../../.."\n\tanimation = $"../.."\n\tcall_deferred("_init_after_ready")\n\nfunc _init_after_ready():\n\tmat = animation.material as ShaderMaterial\n'
     privat_vars = []
     public_vars = []
+    new = ""
     match current_block["opcode"]:
         case "event_whenflagclicked":
-            content = convert_blocks(blocks, blocks[current_block["next"]], main, name)
+            content = convert_blocks(blocks, blocks[current_block["next"]], main, name, 1)
+            new = ""
+        case "event_whenthisspriteclicked":
+            main += 'func _on_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:\n\tif  event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:\n'
+            content = convert_blocks(blocks, blocks[current_block["next"]], main, name, 2)
+            new = '[connection signal="input_event" from="Sprite/Area2D" to="Sprite/scripts/NAME" method="_on_event"]\n'
     open(f"{path}{name}.gd", "w").write(header + content)
-
+    return new
 def main_gd(variables, x, y, visible, size, direction, rotationStyle):
     code = f'''extends Node2D\n@export_group("Properties")\n@export_range(-179, 180) var direction: float = {direction - 90}\n@export var stretch = Vector2i(100, 100)\n@export var size = 100\nvar size_x = {-1 if rotationStyle == "left-right" and direction < 0 else 1}\n@export_enum("all around", "left-right", "don't rotate") var rotation_type: String = "{rotationStyle}"\n@export_group("Variables")\n'''
     for key, name in variables.items():
         code += f'''var {convert_string(name[0])} = {name[1]}'''
         code += (
-            "func _on_ready() -> void:\n"
-            "\tanimation.scale = Vector2(size / 100 * size_x * strech.x / 100, size / 100 * strech.y / 100)\n"
-            "\tanimation.rotation = deg_to_rad(direction - 90)\n"
+            'func _on_ready() -> void:\n'
+            '\tanimation.scale = Vector2(size / 100 * size_x * strech.x / 100, size / 100 * strech.y / 100)\n'
+            '\tanimation.rotation = deg_to_rad(direction - 90)\n\n'
+            #touching mouse
+            'func is_mouse_over_hitbox() -> bool:\n'
+            '\tvar mouse_pos = get_global_mouse_position()\n'
+            '\treturn $CharacterBody2D/Area2D.get_polygon().has_point(\n'
+            '\t\t$CharacterBody2D/CollisionPolygon2D.to_local(mouse_pos)\n'
+            '\t)\n\n'
+            #touching other Object
+            'func is_touching_other_sprite(other_name: String) -> bool:\n'
+            '\tvar other: Node2D = $"..".get_node_or_null(other_name)\n'
+            '\tif other == null:\n'
+            '\t\treturn false\n'
+            '\tvar anim = $Sprite.animation\n'
+            '\tvar poly: CollisionPolygon2D = $Sprite/Area2D.get_node_or_null("Collision-" + anim)\n'
+            '\tif poly == null or not poly.visible:\n'
+            '\t\treturn false\n\n'
+            '\tvar other_sprite = other.get_node("Sprite")\n'
+            '\tvar other_anim = other_sprite.animation\n'
+            '\tvar other_poly: CollisionPolygon2D = other_sprite.get_node("Area2D").get_node_or_null("Collision-" + other_anim)\n'
+            '\tif other_poly == null or not other_poly.visible:\n'
+            '\t\treturn false\n\n'
+            '\tvar shape = ConvexPolygonShape2D.new()\n'
+            '\tshape.points = poly.polygon\n\n'
+            '\tvar query = PhysicsShapeQueryParameters2D.new()\n'
+            '\tquery.shape = shape\n'
+            '\tquery.transform = poly.global_transform\n'
+            '\tquery.collide_with_areas = true\n'
+            '\tquery.collide_with_bodies = true\n\n'
+            '\tvar hits = get_world_2d().direct_space_state.intersect_shape(query, 32)\n'
+            '\tvar other_area = other_sprite.get_node("Area2D")\n\n'
+            '\tfor hit in hits:\n'
+            '\t\tif hit.get("collider") == other_area:\n'
+            '\t\t\treturn true\n'
+            '\treturn false\n'
         )
     return code
 

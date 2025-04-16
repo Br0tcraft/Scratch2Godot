@@ -72,26 +72,25 @@ def create_main_tscn(json_file: dict, temp_dir: str, settings, zip_file: dict) -
             main_scene.nodes += f"""\n[node name="scripts" type="Node2D" parent="."]"""
             topLevels = []
             blocks = sprite["blocks"]
-            for opcode, block in blocks.items():
-                if block["topLevel"] == True and block["shadow"] == False and block["next"] != None:
-                    topLevels.append(opcode)
+            topLevels = [opcode for opcode, block in blocks.items() if block["topLevel"] and not block["shadow"] and block["next"]]
+            signals = "\n\n"
             for topLevel in topLevels:
                 name = blocks[topLevel]["opcode"] + "-" + "".join(random.choices(string.digits + string.ascii_lowercase, k=5))
                 main_scene.resource += f"""\n[ext_resource type="Script" path="res://scripts/{sprite["name"]}-{name}.gd" id="id_{sprite["name"]}-{name}"]"""
                 main_scene.nodes += f"""\n[node name="{name}" type="Node2D" parent="scripts"]"""
                 main_scene.nodes += f"""\nscript = ExtResource("id_{sprite["name"]}-{name}")"""
-                create_gd_script(blocks, topLevel, f"{temp_dir}/Godotgame/scripts/", f"{sprite['name']}-{name}")
+                signals += create_gd_script(blocks, topLevel, f"{temp_dir}/Godotgame/scripts/", f"{sprite['name']}-{name}")
         else:
             create_Object_scene(sprite, temp_dir, zip_file)
             main_scene.resource += f'[ext_resource type="PackedScene" uid="uid://sprite-{sprite["name"]}" path="res://sprites/{sprite["name"]}.tscn" id="id-sprite-{sprite["name"]}"]\n'
             main_scene.nodes += f'\n[node name="{sprite["name"]}" parent="." instance=ExtResource("id-sprite-{sprite["name"]}")]\nposition = Vector2({sprite["x"]}, {sprite["y"] * -1})\n'
-    open(f'{temp_dir}/Godotgame/main.tscn', "w").write(main_scene.load_steps + main_scene.resource + main_scene.background + main_scene.standart + main_scene.nodes)
-    shutil.copy("resouces/icon.svg", f'{temp_dir}/Godotgame/icon.svg')
-    shutil.copy("resouces/controll.gd", f'{temp_dir}/Godotgame/assets/controll.gd')
-    shutil.copy("resouces/correctures.gd", f'{temp_dir}/Godotgame/assets/correctures.gd')
-    shutil.copy("resouces/effects.gdshader", f'{temp_dir}/Godotgame/assets/effects.gdshader')
-    shutil.copy("resouces/bubble.tscn", f'{temp_dir}/Godotgame/assets/bubble.tscn')
-    shutil.copy("resouces/bubble.gd", f'{temp_dir}/Godotgame/scripts/bubble.gd')
+    open(f'{temp_dir}/Godotgame/main.tscn', "w").write(main_scene.load_steps + main_scene.resource + main_scene.background + main_scene.standart + main_scene.nodes + signals)
+    shutil.copy("resources/icon.svg", f'{temp_dir}/Godotgame/icon.svg')
+    shutil.copy("resources/controll.gd", f'{temp_dir}/Godotgame/assets/controll.gd')
+    shutil.copy("resources/correctures.gd", f'{temp_dir}/Godotgame/assets/correctures.gd')
+    shutil.copy("resources/effects.gdshader", f'{temp_dir}/Godotgame/assets/effects.gdshader')
+    shutil.copy("resources/bubble.tscn", f'{temp_dir}/Godotgame/assets/bubble.tscn')
+    shutil.copy("resources/bubble.gd", f'{temp_dir}/Godotgame/scripts/bubble.gd')
 
 def create_Object_scene(sprite_data: dict, temp_dir: str, zip_file) -> str:
     '''
@@ -200,15 +199,16 @@ def create_Object_scene(sprite_data: dict, temp_dir: str, zip_file) -> str:
 
     # Process top-level blocks
     top_levels = [opcode for opcode, block in sprite_data["blocks"].items() if block["topLevel"] and not block["shadow"] and block["next"]]
+    signals = "\n\n"
     for top_level in top_levels:
         name = f'{sprite_data["blocks"][top_level]["opcode"]}-{"".join(random.choices(string.digits + string.ascii_lowercase, k=5))}'
         sprite.resource += f'\n[ext_resource type="Script" path="res://scripts/{sprite_data["name"]}-{name}.gd" id="id_{sprite_data["name"]}-{name}"]'
         sprite.nodes += f'\n[node name="{name}" type="Node2D" parent="Sprite/scripts"]\nscript = ExtResource("id_{sprite_data["name"]}-{name}")'
-        create_gd_script(sprite_data["blocks"], top_level, f"{temp_dir}/Godotgame/scripts/", f"{sprite_data['name']}-{name}")
+        signals += create_gd_script(sprite_data["blocks"], top_level, f"{temp_dir}/Godotgame/scripts/", f"{sprite_data['name']}-{name}").replace("NAME", name)
     sprite.nodes += '[connection signal="body_entered" from="Sprite/Area2D" to="." method="_body_entered"]\n[connection signal="input_event" from="Sprite/Area2D" to="." method="_input_event"]'
     # Finalize animation and scene files
     animation.res = animation.res.rstrip(", ") + "]"
-    final_scene = sprite.load_steps + sprite.resource + "\n" + sprite.nodes
+    final_scene = sprite.load_steps + sprite.resource + "\n" + sprite.nodes + signals
     final_animation = animation.start + "\n" + animation.ext + "\n\n" + animation.res
     open(f'{temp_dir}/Godotgame/sprites/{sprite_data["name"]}.tscn', "w").write(final_scene)
     open(f'{temp_dir}/Godotgame/costumes/Animation-{sprite_data["name"]}.tres', "w").write(final_animation)
