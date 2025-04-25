@@ -363,6 +363,34 @@ def convert_blocks(blocks: dict, block: dict, code: str, name: str, spaces: int)
                         code += "\n" + spaces + 'effect = correctur.ms('+ str(repeat_content(blocks, block, "CHANGE")) + f', "float", "res://scripts/{name}.gd", "change effect [-----] by (!)")\n'
                         match block["fields"]["EFFECT"][0]:
                             case "COLOR":
+                                code += spaces + 'mat.set_shader_parameter("color_shift", mat.get_shader_parameter("color_shift") + effect)\n'
+                            case "MOSAIC":
+                                code += spaces + 'mat.set_shader_parameter("mosaic", mat.get_shader_parameter("mosaic") + effect)\n'
+                            case "RED":
+                                code += spaces + 'mat.set_shader_parameter("red", mat.get_shader_parameter("red") + effect)\n'
+                            case "GREEN":
+                                code += spaces + 'mat.set_shader_parameter("green", mat.get_shader_parameter("green") + effect)\n'
+                            case "BLUE":
+                                code += spaces + 'mat.set_shader_parameter("blue", mat.get_shader_parameter("blue") + effect)\n'
+                            case "FISHEYE":
+                                code += spaces + 'mat.set_shader_parameter("fisheye", mat.get_shader_parameter("fisheye") + effect)\n'
+                            case "WHIRL":
+                                code += spaces + 'mat.set_shader_parameter("whirl", mat.get_shader_parameter("whirl") + effect)\n'
+                            case "PIXELATE":
+                                code += spaces + 'mat.set_shader_parameter("pixelate", mat.get_shader_parameter("pixelate") + effect)\n'
+                            case "BRIGHTNESS":
+                                code += spaces + 'mat.set_shader_parameter("brightness",mat.get_shader_parameter("brightness") + effect)\n'
+                            case "GHOST":
+                                code += spaces + 'mat.set_shader_parameter("ghost", mat.get_shader_parameter("ghost") + effect)\n'
+                            case "SATURATION":
+                                code += spaces + 'mat.set_shader_parameter("saturation", mat.get_shader_parameter("saturation") + effect)\n'
+                            case "OPAQUE":
+                                code += spaces + 'mat.set_shader_parameter("opaque ", mat.get_shader_parameter("opaque") + effect)\n'
+                    case "looks_seteffect":
+                        var["effect"] = '0'
+                        code += "\n" + spaces + 'effect = correctur.ms('+ str(repeat_content(blocks, block, "VALUE")) + f', "float", "res://scripts/{name}.gd", "change effect [-----] by (!)")\n'
+                        match block["fields"]["EFFECT"][0]:
+                            case "COLOR":
                                 code += spaces + 'mat.set_shader_parameter("color_shift", effect)\n'
                             case "MOSAIC":
                                 code += spaces + 'mat.set_shader_parameter("mosaic", effect)\n'
@@ -388,18 +416,18 @@ def convert_blocks(blocks: dict, block: dict, code: str, name: str, spaces: int)
                                 code += spaces + 'mat.set_shader_parameter("opaque ", effect)\n'
                     case "looks_cleargraphiceffects":
                         code += (
-                            f'\n{spaces}mat.set_shader_parameter("color_shift ", 0)\n'
-                            f'{spaces}mat.set_shader_parameter("mosaic ", 0)\n'
-                            f'{spaces}mat.set_shader_parameter("red ", 0)\n'
-                            f'{spaces}mat.set_shader_parameter("green ", 0)\n'
-                            f'{spaces}mat.set_shader_parameter("blue ", 0)\n'
-                            f'{spaces}mat.set_shader_parameter("fisheye ", 0)\n'
-                            f'{spaces}mat.set_shader_parameter("whirl ", 0)\n'
-                            f'{spaces}mat.set_shader_parameter("pixelate ", 0)\n'
-                            f'{spaces}mat.set_shader_parameter("brightness ", 0)\n'
-                            f'{spaces}mat.set_shader_parameter("ghost ", 0)\n'
-                            f'{spaces}mat.set_shader_parameter("saturation ", 0)\n'
-                            f'{spaces}mat.set_shader_parameter("opaque ", 0)\n'
+                            f'\n{spaces}mat.set_shader_parameter("color_shift", 0)\n'
+                            f'{spaces}mat.set_shader_parameter("mosaic", 0)\n'
+                            f'{spaces}mat.set_shader_parameter("red", 0)\n'
+                            f'{spaces}mat.set_shader_parameter("green", 0)\n'
+                            f'{spaces}mat.set_shader_parameter("blue", 0)\n'
+                            f'{spaces}mat.set_shader_parameter("fisheye", 0)\n'
+                            f'{spaces}mat.set_shader_parameter("whirl", 0)\n'
+                            f'{spaces}mat.set_shader_parameter("pixelate", 0)\n'
+                            f'{spaces}mat.set_shader_parameter("brightness", 0)\n'
+                            f'{spaces}mat.set_shader_parameter("ghost", 0)\n'
+                            f'{spaces}mat.set_shader_parameter("saturation", 0)\n'
+                            f'{spaces}mat.set_shader_parameter("opaque", 0)\n'
                             f'{spaces}mat.set_shader_parameter("tint_color", Color(1, 1, 1))\n'
                         )
                     case "looks_setTintColor":
@@ -699,23 +727,27 @@ def repeat_content(blocks: dict, block: list, input_type: str):
             return(f'"{str(value[0])}"')
     return 0
 
-def create_gd_script(blocks: dict, block_opcode: str, path: str, name: str) -> None:
+def create_gd_script(blocks: dict, block_opcode: str, path: str, name: str, sprite_type: str) -> None:
     '''create the gd-script file of one stack blocks and saves this as "name" in path/folder "path"'''
     var = {}
     current_block = blocks[block_opcode]
             
     header = 'extends Node2D\n\nvar main = ""\nvar object = ""\nvar animation = ""\nvar mat = ""\n'
     main = "func _ready() -> void:\n"
-    main += '\tmain = $"../../../.."\n\tobject = $"../../.."\n\tanimation = $"../.."\n\tcall_deferred("_init_after_ready")\n\nfunc _init_after_ready():\n\tmat = animation.material as ShaderMaterial\n'
+    if sprite_type == "Background":
+        main += '\tmain = $"../.."\n\tobject = $"../.."\n\tanimation = $"../.."\n\tcall_deferred("_init_after_ready")\n\nfunc _init_after_ready():\n\tmat = animation.material as ShaderMaterial\n'
+    else:
+        main += '\tmain = $"../../../.."\n\tobject = $"../../.."\n\tanimation = $"../.."\n\tcall_deferred("_init_after_ready")\n\nfunc _init_after_ready():\n\tmat = animation.material as ShaderMaterial\n'
     privat_vars = []
     public_vars = []
     new = ""
+    content = ""
     match current_block["opcode"]:
         case "event_whenflagclicked":
             content = convert_blocks(blocks, blocks[current_block["next"]], main, name, 1)
             new = ""
         case "event_whenthisspriteclicked":
-            main += 'func _on_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:\n\tif  event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:\n'
+            main += 'func _on_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:\n\tif  event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:\n'
             content = convert_blocks(blocks, blocks[current_block["next"]], main, name, 2)
             new = '[connection signal="input_event" from="Sprite/Area2D" to="Sprite/scripts/NAME" method="_on_event"]\n'
     open(f"{path}{name}.gd", "w").write(header + content)

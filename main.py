@@ -31,8 +31,9 @@ def Convert_game(sb3_file: str, settings: dict) -> str:
             with zip_file.open("project.json") as json_file:
                 json_file = json.load(json_file)
                 #create main_scene
+                create_main_tscn(json_file, temp_dir, settings, zip_file)
                 try:
-                    create_main_tscn(json_file, temp_dir, settings, zip_file)
+                    print("")
                 except Exception as error:
                     print(f"error by converting game: {error}")
         return(temp_dir)
@@ -44,4 +45,4 @@ def Convert_game(sb3_file: str, settings: dict) -> str:
         print("Invalid JSON in project.json")
 
 #Convert_game("temp/Fish.sb3", settings)
-Convert_game("temp/ScratchProject.pmp", settings)
+Convert_game("temp/ScratchProject.sb3", settings)
