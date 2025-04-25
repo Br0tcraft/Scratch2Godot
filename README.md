@@ -1,6 +1,8 @@
 ## Scratch2Godot - Work in Progress
 Scratch2Godot is a converter that transforms Scratch projects (.sb3) into Godot projects. 
 
+![image](resources/icon.svg)
+
 An example Scratch game and its converted Godot version can be found in the temp folder.
 
 Important Note: This tool is still in development and not fully functional. Some features are experimental or not yet implemented.
@@ -151,12 +153,14 @@ To start the tool and convert a Scratch project to a Godot project, follow these
     
 - You can adjust the **project settings** by modifying the `settings` dictionary inside `main.py`:
         
-```settings = {     
+```
+settings = {     
 "project_name": "Scratchgame",     
 "project_version": "1.0",     
 "project_author": "Scratch",     
 "project_description": "A Scratch project",     
 "fps": "30"
-}```
+}
+```
         
 - These settings will be applied during the conversion process.
