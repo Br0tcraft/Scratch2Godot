@@ -1,4 +1,4 @@
-from utils.helpers import get_loop_varname
+from utils.helpers import get_loop_varname, convert_key
 def convert_blocks(blocks: dict, block: dict, code: str, name: str, spaces: int):
     var = {}
     def convert_block(blocks: dict, block: dict, space: int, code: str, name: str):
@@ -735,6 +735,7 @@ def create_gd_script(blocks: dict, block_opcode: str, path: str, name: str, spri
     header = 'extends Node2D\n\nvar main = ""\nvar object = ""\nvar animation = ""\nvar mat = ""\n'
     main = "func _ready() -> void:\n"
     if sprite_type == "Background":
+        header += 'var broadcast = ""\n'
         main += '\tmain = $"../.."\n\tobject = $"../.."\n\tanimation = $"../.."\n\tcall_deferred("_init_after_ready")\n\nfunc _init_after_ready():\n\tmat = animation.material as ShaderMaterial\n'
     else:
         main += '\tmain = $"../../../.."\n\tobject = $"../../.."\n\tanimation = $"../.."\n\tcall_deferred("_init_after_ready")\n\nfunc _init_after_ready():\n\tmat = animation.material as ShaderMaterial\n'
@@ -747,9 +748,30 @@ def create_gd_script(blocks: dict, block_opcode: str, path: str, name: str, spri
             content = convert_blocks(blocks, blocks[current_block["next"]], main, name, 1)
             new = ""
         case "event_whenthisspriteclicked":
-            main += 'func _on_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:\n\tif  event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:\n'
+            main += 'func _on_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:\n\tif event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:\n'
             content = convert_blocks(blocks, blocks[current_block["next"]], main, name, 2)
             new = '[connection signal="input_event" from="Sprite/Area2D" to="Sprite/scripts/NAME" method="_on_event"]\n'
+        case "event_whenkeypressed":
+            if current_block["fields"]["KEY_OPTION"][0] == "any":
+                main += 'func _input(event: InputEvent) -> void:\n\tif event is InputEventKey and not event.echo and event.pressed\n'
+            else:
+                main += 'func _input(event: InputEvent) -> void:\n\tif event is InputEventKey and not event.echo and event.pressed and event.keycode == ' + str(convert_key(current_block["fields"]["KEY_OPTION"][0])) + ':\n'
+            content = convert_blocks(blocks, blocks[current_block["next"]], main, name, 2)
+            new = '[connection signal="input_event" from="Sprite/Area2D" to="Sprite/scripts/NAME" method="_on_event"]\n'
+        case "event_whenbackdropswitchesto":
+            header += f'var current_costume = ""\nvar new_backdrop = "{current_block["fields"]["BACKDROP"][0]}"\n'
+            main += '\tcurrent_costume = main.animation\n'
+            main += 'func _process(_delta) -> void:\n\tif main.animation != current_costume:\n\t\tcurrent_costume = main.animation\n\t\tif main.animation == new_backdrop:\n'
+            content = convert_blocks(blocks, blocks[current_block["next"]], main, name, 3)
+        case "event_whenbroadcastreceived":
+            header += 'var current_broadcast = ""\n'
+            header += f'var my_broadcast = "{current_block["fields"]["BROADCAST_OPTION"][0]}"\n'
+            header += 'var new_broadcast = false\n'
+            main += '\tcurrent_broadcast = main.broadcast\n'
+            main += 'func _process(_delta) -> void:\n\tif main.broadcast != current_broadcast:\n\t\tcurrent_broadcast = main.broadcast\n\t\tnew_broadcast = true\n'
+            main += '\tif new_broadcast and main.broadcast == my_broadcast:\n\t\tnew_broadcast = false\n'
+            content = convert_blocks(blocks, blocks[current_block["next"]], main, name, 2)
+
     open(f"{path}{name}.gd", "w").write(header + content)
     return new
 def main_gd(variables, x, y, visible, size, direction, rotationStyle):

@@ -26,27 +26,28 @@ def create_main_tscn(json_file: dict, temp_dir: str, settings, zip_file: dict) -
     config = f"""config_version=5\n\n[application]\n\nconfig/name="{settings["project_name"]}"\nconfig/description="{settings["project_description"]}"\nconfig/version="{settings["project_version"]}"\nrun/main_scene="res://main.tscn"\nconfig/features=PackedStringArray("4.3", "Mobile")\nrun/max_fps={settings["fps"]}\nconfig/icon="res://icon.svg"\n[display]\n\nwindow/size/viewport_width=480\nwindow/size/viewport_height=360\nwindow/stretch/mode="canvas_items"\n\n[rendering]\n\nrenderer/rendering_method="mobile" """
     open(f'{temp_dir}/Godotgame/project.godot', "w").write(config)
     main_scene = SimpleNamespace()
-    main_scene.load_steps = f'[ext_resource type="Shader" path="res://assets/effects.gdshader" id="1_mjccp"]\n[gd_scene load_steps={len(json_file["targets"])*3} format=3 uid="uid://{"".join(random.choices(string.digits + string.ascii_lowercase, k=13))}"]\n'
-    main_scene.resource = '\n[ext_resource type="SpriteFrames" uid="uid://-Stage" path="res://costumes/Animation-Stage.tres" id="id-frame-Stage"]\n'
+    main_scene.load_steps = f'[gd_scene load_steps={len(json_file["targets"])*3} format=3 uid="uid://{"".join(random.choices(string.digits + string.ascii_lowercase, k=13))}"]\n'
+    main_scene.resource = '\n[ext_resource type="Shader" path="res://assets/effects.gdshader" id="1_mjccp"]\n[ext_resource type="SpriteFrames" uid="uid://-Stage" path="res://costumes/Animation-Stage.tres" id="id-frame-Stage"]\n'
     main_scene.scripts = ""
-    main_scene.standart = f'\n\n[node name="Camera2D" type="Camera2D" parent="."]\nposition = Vector2(0, 0)\n'
-    main_scene.nodes = ('[sub_resource type="ShaderMaterial" id="ShaderMaterial_rg8s7"]'
-                            'shader = ExtResource("1_mjccp")'
-                            'shader_parameter/color_shift = 0.0'
-                            'shader_parameter/fisheye = null'
-                            'shader_parameter/whirl = null'
-                            'shader_parameter/pixelate = null'
-                            'shader_parameter/mosaic = null'
-                            'shader_parameter/brightness = null'
-                            'shader_parameter/ghost = null'
-                            'shader_parameter/sprite_size = 10.0'
-                            'shader_parameter/saturation = null'
-                            'shader_parameter/opaque = null'
-                            'shader_parameter/red = null'
-                            'shader_parameter/green = null'
-                            'shader_parameter/blue = null'
-                            'shader_parameter/tint_color = Color(1, 1, 1, 1)'
-                            )
+    main_scene.standart = ('\n\n[sub_resource type="ShaderMaterial" id="ShaderMaterial_rg8s7"]'
+                        'shader = ExtResource("1_mjccp")'
+                        f'shader_parameter/color_shift = 0.0\n'
+                        f'shader_parameter/fisheye = 0.0\n'
+                        f'shader_parameter/whirl = 0.0\n'
+                        f'shader_parameter/pixelate = 0.0\n'
+                        f'shader_parameter/mosaic = 0.0\n'
+                        f'shader_parameter/brightness = 0.0\n'
+                        f'shader_parameter/ghost = 0.0\n'
+                        f'shader_parameter/sprite_size = 10.0\n'
+                        f'shader_parameter/saturation = null\n'
+                        f'shader_parameter/opaque = null\n'
+                        f'shader_parameter/red = null\n'
+                        f'shader_parameter/green = null\n'
+                        f'shader_parameter/blue = null\n'
+                        f'shader_parameter/tint_color = Color(1, 1, 1, 1)\n'
+                        )
+    main_scene.standart += f'\n[node name="Camera2D" type="Camera2D" parent="."]\nposition = Vector2(0, 0)\n'
+                            
     for sprite in json_file["targets"]:
         if sprite["isStage"]:
             print("TRue")
@@ -85,7 +86,7 @@ def create_main_tscn(json_file: dict, temp_dir: str, settings, zip_file: dict) -
             animation.res += "]"
             final_animation = animation.start + "\n" + animation.ext + "\n\n" + animation.res
             open(f'{temp_dir}/Godotgame/costumes/Animation-{sprite["name"]}.tres', "w").write(final_animation)
-            main_scene.nodes += f"""\n[node name="scripts" type="Node2D" parent="."]"""
+            main_scene.nodes = f"""\n[node name="scripts" type="Node2D" parent="."]"""
             topLevels = []
             blocks = sprite["blocks"]
             topLevels = [opcode for opcode, block in blocks.items() if block["topLevel"] and not block["shadow"] and block["next"]]
@@ -220,7 +221,7 @@ def create_Object_scene(sprite_data: dict, temp_dir: str, zip_file) -> str:
         name = f'{sprite_data["blocks"][top_level]["opcode"]}-{"".join(random.choices(string.digits + string.ascii_lowercase, k=5))}'
         sprite.resource += f'\n[ext_resource type="Script" path="res://scripts/{sprite_data["name"]}-{name}.gd" id="id_{sprite_data["name"]}-{name}"]'
         sprite.nodes += f'\n[node name="{name}" type="Node2D" parent="Sprite/scripts"]\nscript = ExtResource("id_{sprite_data["name"]}-{name}")'
-        signals += create_gd_script(sprite_data["blocks"], top_level, f"{temp_dir}/Godotgame/scripts/", f"{sprite_data['name']}-{name}", "Background").replace("NAME", name)
+        signals += create_gd_script(sprite_data["blocks"], top_level, f"{temp_dir}/Godotgame/scripts/", f"{sprite_data['name']}-{name}", "Background" if sprite_data["isStage"] else "Sprite").replace("NAME", name)
     sprite.nodes += '[connection signal="body_entered" from="Sprite/Area2D" to="." method="_body_entered"]\n[connection signal="input_event" from="Sprite/Area2D" to="." method="_input_event"]'
     # Finalize animation and scene files
     animation.res = animation.res.rstrip(", ") + "]"
