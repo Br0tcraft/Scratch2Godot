@@ -36,26 +36,30 @@ def get_loop_varname(depth: int) -> str:
 
 scratch_to_godot_keys = {
     # Special keys
-    "space": "Key.SPACE",
-    "left arrow": "Key.LEFT",
-    "right arrow": "Key.RIGHT",
-    "up arrow": "Key.UP",
-    "down arrow": "Key.DOWN",
-    "enter": "Key.ENTER",
-    "backspace": "Key.BACKSPACE",
-    "delete": "Key.DELETE",
-    "escape": "Key.ESCAPE",
-    "shift": "Key.SHIFT",
-    "control": "Key.CTRL",
-    "caps lock": "Key.CAPSLOCK",
-    "page up": "Key.PAGEUP",
-    "page down": "Key.PAGEDOWN",
-    "home": "Key.HOME",
-    "end": "Key.END",
-    "insert": "Key.INSERT",
-    "scroll lock": "Key.SCROLLLOCK",
-    ".": "Key.PERIOD",
-    ",": "Key.COMMA"
+    "space": "KEY_SPACE",
+    "left arrow": "KEY_LEFT",
+    "right arrow": "KEY_RIGHT",
+    "up arrow": "KEY_UP",
+    "down arrow": "KEY_DOWN",
+    "enter": "KEY_ENTER",
+    "backspace": "KEY_BACKSPACE",
+    "delete": "KEY_DELETE",
+    "escape": "KEY_ESCAPE",
+    "shift": "KEY_SHIFT",
+    "control": "KEY_CTRL",
+    "caps lock": "KEY_CAPSLOCK",
+    "page up": "KEY_PAGEUP",
+    "page down": "KEY_PAGEDOWN",
+    "home": "KEY_HOME",
+    "end": "KEY_END",
+    "insert": "KEY_INSERT",
+    "scroll lock": "KEY_SCROLLLOCK",
+    ".": "KEY_PERIOD",
+    ",": "KEY_COMMA",
+    "+": "PLUS",
+    "-": "MINUS",
+    "*": "ASTERISK",
+    "/": "SLASH"
 }
 
 def convert_key(scratch_key):
@@ -65,19 +69,12 @@ def convert_key(scratch_key):
         return scratch_to_godot_keys[scratch_key]
     elif len(scratch_key) == 1:
         if scratch_key.isalpha():
-            return f"Key.{scratch_key.upper()}"
+            return f"KEY_{scratch_key.upper()}"
         elif scratch_key.isdigit():
-            return f"Key.{scratch_key}"
-        elif scratch_key in "+-*/":
-            special_chars = {
-                "+": "PLUS",
-                "-": "MINUS",
-                "*": "ASTERISK",
-                "/": "SLASH"
-            }
-            return f"Key.{special_chars[scratch_key]}"
+            return f"KEY_{scratch_key}"
     return "Key.UNKNOWN"
 
+    
     
     
 if __name__ == "__main__":

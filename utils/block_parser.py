@@ -542,6 +542,19 @@ def convert_blocks(blocks: dict, block: dict, code: str, name: str, spaces: int)
                                 f'''\n{spaces}print("WARNING: The content in the block 'repeat until <>: {"{}"}' in the file 'res://scripts/{name}.gd' does not exist ''")\n'''
                                 f'{spaces}correctur.help()\n'
                             )
+                    case "event_broadcast":
+                        
+                        if "BROADCAST_INPUT" in block["inputs"]:
+                            var["message"] = '""'
+                            code += "\n" + spaces + 'message = correctur.ms('+ str(repeat_content(blocks, block, "BROADCAST_INPUT")) + f', "string", "res://scripts/{name}.gd", "broadcast (!)")\n'
+                            code += spaces + 'main.broadcastlist[message] = 0\n'
+                            code += spaces + 'main.broadcast = message\n'
+                        #hier weiter machen
+                        else:
+                            code += (
+                                f'''\n{spaces}print("WARNING: The message in the block 'broadcast' in the file 'res://scripts/{name}.gd' does not exist ''")\n'''
+                                f'{spaces}correctur.help()\n'
+                            )
                     case _:
                         code += spaces + f'''print("WARNING: unknown block '{block["opcode"]}'")\n'''
                     
@@ -768,17 +781,17 @@ def create_gd_script(blocks: dict, block_opcode: str, path: str, name: str, spri
             header += f'var my_broadcast = "{current_block["fields"]["BROADCAST_OPTION"][0]}"\n'
             header += 'var new_broadcast = false\n'
             main += '\tcurrent_broadcast = main.broadcast\n'
-            main += 'func _process(_delta) -> void:\n\tif main.broadcast != current_broadcast:\n\t\tcurrent_broadcast = main.broadcast\n\t\tnew_broadcast = true\n'
-            main += '\tif new_broadcast and main.broadcast == my_broadcast:\n\t\tnew_broadcast = false\n'
+            main += 'func _process(_delta) -> void:\n\tif main.broadcast != current_broadcast:\n\t\tcurrent_broadcast = main.broadcast\n\t\tnew_broadcast = true\n\t\tmain.broadcastlist[my_broadcast] += 1'
+            main += '\tif new_broadcast and main.broadcast == my_broadcast:\n\t\tnew_broadcast = false\n\t\tawait get_tree().process_frame\n\t\tmain.broadcast = ""\n'
             content = convert_blocks(blocks, blocks[current_block["next"]], main, name, 2)
-
+            content += "\n\t\tmain.broadcastlist[my_broadcast] -= 1"
     open(f"{path}{name}.gd", "w").write(header + content)
     return new
 def main_gd(variables, x, y, visible, size, direction, rotationStyle):
     code = f'''extends Node2D\n@export_group("Properties")\n@export_range(-179, 180) var direction: float = {direction - 90}\n@export var stretch = Vector2i(100, 100)\n@export var size = 100\nvar size_x = {-1 if rotationStyle == "left-right" and direction < 0 else 1}\n@export_enum("all around", "left-right", "don't rotate") var rotation_type: String = "{rotationStyle}"\n@export_group("Variables")\n'''
     for key, name in variables.items():
         code += f'''var {convert_string(name[0])} = {name[1]}'''
-        code += (
+    code += (
             'func _on_ready() -> void:\n'
             '\tanimation.scale = Vector2(size / 100 * size_x * strech.x / 100, size / 100 * strech.y / 100)\n'
             '\tanimation.rotation = deg_to_rad(direction - 90)\n\n'
@@ -817,6 +830,12 @@ def main_gd(variables, x, y, visible, size, direction, rotationStyle):
             '\treturn false\n'
         )
     return code
+
+def background_gd():
+    code = (
+        ''
+    )
+
 
 def convert_string(input_str):
     result = []

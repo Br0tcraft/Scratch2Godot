@@ -1,6 +1,7 @@
 import random, string, os, shutil, math
+from unidecode import unidecode
 from types import SimpleNamespace
-from utils.block_parser import create_gd_script, main_gd
+from utils.block_parser import create_gd_script, main_gd, background_gd
 from utils.file_handling import jpg_to_png, svg_to_png, resize_png_half,collision_shape2d, import_file
 
 
@@ -27,10 +28,10 @@ def create_main_tscn(json_file: dict, temp_dir: str, settings, zip_file: dict) -
     open(f'{temp_dir}/Godotgame/project.godot', "w").write(config)
     main_scene = SimpleNamespace()
     main_scene.load_steps = f'[gd_scene load_steps={len(json_file["targets"])*3} format=3 uid="uid://{"".join(random.choices(string.digits + string.ascii_lowercase, k=13))}"]\n'
-    main_scene.resource = '\n[ext_resource type="Shader" path="res://assets/effects.gdshader" id="1_mjccp"]\n[ext_resource type="SpriteFrames" uid="uid://-Stage" path="res://costumes/Animation-Stage.tres" id="id-frame-Stage"]\n'
+    main_scene.resource = '\n[ext_resource type="Shader" path="res://assets/effects.gdshader" id="1_mjccp"]\n[ext_resource type="SpriteFrames" uid="uid://-Stage" path="res://costumes/Animation-Stage.tres" id="id-frame-Stage"]\nf"""\n[ext_resource type="Script" path="res://scripts/BACKGROUND.gd" id="id_Background-script"]"""'
     main_scene.scripts = ""
-    main_scene.standart = ('\n\n[sub_resource type="ShaderMaterial" id="ShaderMaterial_rg8s7"]'
-                        'shader = ExtResource("1_mjccp")'
+    main_scene.standart = ('\n\n[sub_resource type="ShaderMaterial" id="ShaderMaterial_rg8s7"]\n'
+                        'shader = ExtResource("1_mjccp")\n'
                         f'shader_parameter/color_shift = 0.0\n'
                         f'shader_parameter/fisheye = 0.0\n'
                         f'shader_parameter/whirl = 0.0\n'
@@ -46,12 +47,15 @@ def create_main_tscn(json_file: dict, temp_dir: str, settings, zip_file: dict) -
                         f'shader_parameter/blue = null\n'
                         f'shader_parameter/tint_color = Color(1, 1, 1, 1)\n'
                         )
-    main_scene.standart += f'\n[node name="Camera2D" type="Camera2D" parent="."]\nposition = Vector2(0, 0)\n'
+    
                             
     for sprite in json_file["targets"]:
+        sprite["name"] = unidecode(str(sprite["name"])).encode('utf-8').decode('utf-8')
         if sprite["isStage"]:
             print("TRue")
-            main_scene.background = f'\n\n[node name="Background" type="AnimatedSprite2D"]\nz_index = -4096\nsprite_frames = ExtResource("id-frame-Stage")\nanimation = &"{sprite["costumes"][sprite["currentCostume"]]["name"]}"\nmaterial = SubResource("ShaderMaterial_rg8s7")\n\n'
+            main_scene.background = f'\n\n[node name="Background" type="AnimatedSprite2D"]\nz_index = -4096\nsprite_frames = ExtResource("id-frame-Stage")\nanimation = &"{sprite["costumes"][sprite["currentCostume"]]["name"]}"\nscript = ExtResource("id_Background-script")\nmaterial = SubResource("ShaderMaterial_rg8s7")\n\n'
+            main_scene.background += f'\n[node name="Camera2D" type="Camera2D" parent="."]\nposition = Vector2(0, 0)\n'
+            background_gd()
             costume = SimpleNamespace()
             animation = SimpleNamespace()
             animation.start = f'[gd_resource type="SpriteFrames" load_steps={len(sprite["costumes"])} format=3 uid="uid://frames-Stage"]'
@@ -101,7 +105,7 @@ def create_main_tscn(json_file: dict, temp_dir: str, settings, zip_file: dict) -
             create_Object_scene(sprite, temp_dir, zip_file)
             main_scene.resource += f'[ext_resource type="PackedScene" uid="uid://sprite-{sprite["name"]}" path="res://sprites/{sprite["name"]}.tscn" id="id-sprite-{sprite["name"]}"]\n'
             main_scene.nodes += f'\n[node name="{sprite["name"]}" parent="." instance=ExtResource("id-sprite-{sprite["name"]}")]\nposition = Vector2({sprite["x"]}, {sprite["y"] * -1})\n'
-    open(f'{temp_dir}/Godotgame/main.tscn', "w").write(main_scene.load_steps + main_scene.resource + main_scene.background + main_scene.standart + main_scene.nodes + signals)
+    open(f'{temp_dir}/Godotgame/main.tscn', "w").write(main_scene.load_steps + main_scene.resource + main_scene.standart + main_scene.background + main_scene.nodes + signals)
     shutil.copy("resources/icon.svg", f'{temp_dir}/Godotgame/icon.svg')
     shutil.copy("resources/controll.gd", f'{temp_dir}/Godotgame/assets/controll.gd')
     shutil.copy("resources/correctures.gd", f'{temp_dir}/Godotgame/assets/correctures.gd')
@@ -113,6 +117,7 @@ def create_Object_scene(sprite_data: dict, temp_dir: str, zip_file) -> str:
     '''
     make a scene file (.tscn) just for one s(prite that is created in Scratch
     '''
+    sprite_data["name"] = unidecode(str(sprite_data["name"])).encode('utf-8').decode('utf-8')
     sprite = SimpleNamespace()
     animation = SimpleNamespace()
 
@@ -167,8 +172,7 @@ def create_Object_scene(sprite_data: dict, temp_dir: str, zip_file) -> str:
     animation.ext = ""
     animation.res = "[resource]\nanimations = ["
     for costume_data in sprite_data["costumes"]:
-        costume.name = costume_data.get("md5ext", f'{costume_data["assetId"]}.{costume_data["dataFormat"]}')
-        
+        costume.name = unidecode(str(costume_data.get("md5ext", f'{costume_data["assetId"]}.{costume_data["dataFormat"]}'))).encode('utf-8').decode('utf-8')
         # Extract and process costume files
         if costume.name.lower().endswith("png"):
             png_path = f"{temp_dir}/Godotgame/{costume.name}"

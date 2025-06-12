@@ -82,6 +82,8 @@ static func ms(value, type, path, block):
 		"repeat while <!>: {}": { "nan": false, "inf": true },
 		"if <!> then: {}": { "nan": false, "inf": true },
 		"if <!> then: {} else: {}": { "nan": false, "inf": true },
+
+		"broadcast (!)": { "nan": "NaN", "inf": "Infinitiv" },
 		}
 	
 	# Prüfen, ob der Block in der Liste ist
