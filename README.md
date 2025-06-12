@@ -35,7 +35,7 @@ Important Note: This tool is still in development and not fully functional. Some
 
 **In Development / Planned:**
 
-- Full support for event handling (e.g. `broadcast`, `broadcast and wait`) – *currently being worked on*  
+- Full support for event handling (not yet stable) – *currently being worked on*  
 - Complete support for additional block categories (e.g. sensing, variables)
 - Improved error handling, debugging output, and overall conversion stability  
 

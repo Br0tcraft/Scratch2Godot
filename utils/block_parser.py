@@ -542,6 +542,8 @@ def convert_blocks(blocks: dict, block: dict, code: str, name: str, spaces: int)
                                 f'''\n{spaces}print("WARNING: The content in the block 'repeat until <>: {"{}"}' in the file 'res://scripts/{name}.gd' does not exist ''")\n'''
                                 f'{spaces}correctur.help()\n'
                             )
+                    
+                    #event blocks
                     case "event_broadcast":
                         
                         if "BROADCAST_INPUT" in block["inputs"]:
@@ -549,6 +551,21 @@ def convert_blocks(blocks: dict, block: dict, code: str, name: str, spaces: int)
                             code += "\n" + spaces + 'message = correctur.ms('+ str(repeat_content(blocks, block, "BROADCAST_INPUT")) + f', "string", "res://scripts/{name}.gd", "broadcast (!)")\n'
                             code += spaces + 'main.broadcastlist[message] = 0\n'
                             code += spaces + 'main.broadcast = message\n'
+                        else:
+                            code += (
+                                f'''\n{spaces}print("WARNING: The message in the block 'broadcast' in the file 'res://scripts/{name}.gd' does not exist ''")\n'''
+                                f'{spaces}correctur.help()\n'
+                            )
+                    case "event_broadcastandwait":
+                        
+                        if "BROADCAST_INPUT" in block["inputs"]:
+                            var["message"] = '""'
+                            code += "\n" + spaces + 'message = correctur.ms('+ str(repeat_content(blocks, block, "BROADCAST_INPUT")) + f', "string", "res://scripts/{name}.gd", "broadcast (!)")\n'
+                            code += spaces + 'main.broadcastlist[message] = 0\n'
+                            code += spaces + 'main.broadcast = message\n'
+                            code += spaces + 'await get_tree().process_frame\n'
+                            code += spaces + 'while main.broadcastlist[message] > 0:\n'
+                            code += spaces + '\tawait get_tree().process_frame\n'
                         #hier weiter machen
                         else:
                             code += (
@@ -557,7 +574,6 @@ def convert_blocks(blocks: dict, block: dict, code: str, name: str, spaces: int)
                             )
                     case _:
                         code += spaces + f'''print("WARNING: unknown block '{block["opcode"]}'")\n'''
-                    
             except:
                 code += spaces + f'''print("WARNING: error by converting block '{block["opcode"]}'")\n'''
             if block["next"] == None:
