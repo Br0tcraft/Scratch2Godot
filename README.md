@@ -11,28 +11,33 @@ Important Note: This tool is still in development and not fully functional. Some
 
 **Implemented:**
 
-- Detection of all sprites and backgrounds  
-- Full support for motion blocks (Scratch & PenguinMod)  
-- Support for all Scratch looks blocks  
-    - Some PenguinMod looks blocks are supported  
-    - Special speech bubble features are not yet implemented (standard bubbles work)  
-    - Scratch effects are present but not working perfect
-- Full support for all operator blocks in Scratch  
-- Partial support for control blocks:
-    - `wait (1) seconds`  
-    - `wait (1) seconds or until <>`  
-    - `repeat (10)`  
-    - `forever`  
-    - `if <> then {}`  
-    - `if <> then {} else {}`  
-    - `repeat until <> {}`  
-    - `while <> {}` 
-- Only two event blocks works: “When flag is clicked” and "When this sprite clicked"
+- Detection and import of all sprites and stage backgrounds  
+- Full support for motion blocks (from both Scratch and PenguinMod)  
+- Support for all standard Scratch "Looks" blocks  
+  - Partial support for PenguinMod "Looks" extensions  
+  - Standard speech bubbles are supported; special effects like stylized bubbles are not yet implemented  
+  - Visual effects exist but may not work exactly as in Scratch  
+- Full support for all operator blocks  
+- Partial implementation of control blocks:  
+  - `wait (1) seconds`  
+  - `wait (1) seconds or until <>`  
+  - `repeat (10)`  
+  - `forever`  
+  - `if <> then {}`  
+  - `if <> then {} else {}`  
+  - `repeat until <> {}`  
+  - `while <> {}`  
+- Limited support for event blocks:  
+  - `when green flag clicked`  
+  - `when this sprite clicked`  
+  - `when (key) pressed`  
+  - *(not yet tested)* `when backdrop switches to ()`
 
-**In development or planned:**
+**In Development / Planned:**
 
-- Full support for all other block categories (e.g. sensing, events, variables)  
-- Improved error handling and stability  
+- Full support for event handling (e.g. `broadcast`, `broadcast and wait`) – *currently being worked on*  
+- Complete support for additional block categories (e.g. sensing, variables)
+- Improved error handling, debugging output, and overall conversion stability  
 
 ### **1. System Requirements**
 
