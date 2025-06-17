@@ -32,10 +32,13 @@ Important Note: This tool is still in development and not fully functional. Some
   - `when this sprite clicked`  
   - `when (key) pressed`  
   - *(not yet tested)* `when backdrop switches to ()`
+  - `when I receive []`
+  - `boradcast ()`
+  - `boradcast () and wait`
 
 **In Development / Planned:**
 
-- Full support for event handling (not yet stable) – *currently being worked on*  
+- Full support for event handling *(except for* `when [loudness] > ()`*), currently under development and not yet stable.*
 - Complete support for additional block categories (e.g. sensing, variables)
 - Improved error handling, debugging output, and overall conversion stability  
 
