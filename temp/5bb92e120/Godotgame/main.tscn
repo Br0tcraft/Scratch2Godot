@@ -1,0 +1,79 @@
+[gd_scene load_steps=33 format=3 uid="uid://qckm8to9g7glf"]
+
+[ext_resource type="Shader" path="res://assets/effects.gdshader" id="1_mjccp"]
+[ext_resource type="SpriteFrames" uid="uid://-Stage" path="res://costumes/Animation-Stage.tres" id="id-frame-Stage"]
+
+[ext_resource type="Script" path="res://scripts/BACKGROUND.gd" id="id_Background-script"]
+[ext_resource type="PackedScene" uid="uid://sprite-fish1" path="res://sprites/fish1.tscn" id="id-sprite-fish1"]
+[ext_resource type="PackedScene" uid="uid://sprite-fish2" path="res://sprites/fish2.tscn" id="id-sprite-fish2"]
+[ext_resource type="PackedScene" uid="uid://sprite-fish3" path="res://sprites/fish3.tscn" id="id-sprite-fish3"]
+[ext_resource type="PackedScene" uid="uid://sprite-fish4" path="res://sprites/fish4.tscn" id="id-sprite-fish4"]
+[ext_resource type="PackedScene" uid="uid://sprite-bubble" path="res://sprites/bubble.tscn" id="id-sprite-bubble"]
+[ext_resource type="PackedScene" uid="uid://sprite-bubble2" path="res://sprites/bubble2.tscn" id="id-sprite-bubble2"]
+[ext_resource type="PackedScene" uid="uid://sprite-bubble3" path="res://sprites/bubble3.tscn" id="id-sprite-bubble3"]
+[ext_resource type="PackedScene" uid="uid://sprite-bubble4" path="res://sprites/bubble4.tscn" id="id-sprite-bubble4"]
+[ext_resource type="PackedScene" uid="uid://sprite-position" path="res://sprites/position.tscn" id="id-sprite-position"]
+[ext_resource type="PackedScene" uid="uid://sprite-dead" path="res://sprites/dead.tscn" id="id-sprite-dead"]
+
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rg8s7"]
+shader = ExtResource("1_mjccp")
+shader_parameter/color_shift = 0.0
+shader_parameter/fisheye = 0.0
+shader_parameter/whirl = 0.0
+shader_parameter/pixelate = 0.0
+shader_parameter/mosaic = 0.0
+shader_parameter/brightness = 0.0
+shader_parameter/ghost = 0.0
+shader_parameter/sprite_size = 10.0
+shader_parameter/saturation = null
+shader_parameter/opaque = null
+shader_parameter/red = null
+shader_parameter/green = null
+shader_parameter/blue = null
+shader_parameter/tint_color = Color(1, 1, 1, 1)
+
+
+[node name="Background" type="AnimatedSprite2D"]
+z_index = -4096
+sprite_frames = ExtResource("id-frame-Stage")
+animation = &"backdrop1"
+script = ExtResource("id_Background-script")
+material = SubResource("ShaderMaterial_rg8s7")
+
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, 0)
+
+[node name="scripts" type="Node2D" parent="."]
+[node name="fish1" parent="." instance=ExtResource("id-sprite-fish1")]
+position = Vector2(-67.24980237390568, -92.31046040205177)
+
+[node name="fish2" parent="." instance=ExtResource("id-sprite-fish2")]
+position = Vector2(-88.93750161651678, -22.32143829173092)
+
+[node name="fish3" parent="." instance=ExtResource("id-sprite-fish3")]
+position = Vector2(-125.26335733815651, 0.8914959322137124)
+
+[node name="fish4" parent="." instance=ExtResource("id-sprite-fish4")]
+position = Vector2(18.657023108407458, -49.69733139184038)
+
+[node name="bubble" parent="." instance=ExtResource("id-sprite-bubble")]
+position = Vector2(-42.30135715903296, -131.9151664064321)
+
+[node name="bubble2" parent="." instance=ExtResource("id-sprite-bubble2")]
+position = Vector2(-165.46683235433738, -182)
+
+[node name="bubble3" parent="." instance=ExtResource("id-sprite-bubble3")]
+position = Vector2(-117.69634751205369, -117.62059641724754)
+
+[node name="bubble4" parent="." instance=ExtResource("id-sprite-bubble4")]
+position = Vector2(-13.272438621028861, -134.3009590740827)
+
+[node name="position" parent="." instance=ExtResource("id-sprite-position")]
+position = Vector2(-56, 164)
+
+[node name="dead" parent="." instance=ExtResource("id-sprite-dead")]
+position = Vector2(-133, 45)
+
+

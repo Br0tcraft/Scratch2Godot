@@ -1,5 +1,10 @@
 import random, string, os, shutil, math
-from unidecode import unidecode
+try:
+    from unidecode import unidecode
+except Exception:
+    def unidecode(x):
+        return x
+
 from types import SimpleNamespace
 from utils.block_parser import create_gd_script, main_gd, background_gd
 from utils.file_handling import jpg_to_png, svg_to_png, resize_png_half, collision_shape2d, import_file

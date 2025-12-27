@@ -1,4 +1,15 @@
 import os
+import logging
+
+
+def init_logging(debug: bool=False) -> None:
+    """Initialize module-level logging configuration.
+    Call this once at program startup. When debug is True, set level to DEBUG.
+    """
+    level = logging.DEBUG if debug else logging.INFO
+    logging.basicConfig(level=level, format='%(levelname)s: %(message)s')
+    logging.getLogger("PIL").setLevel(logging.WARNING)
+    logging.debug(f"Logging initialized (debug={debug})")
 
 def create_folders(temp_dir: str) -> None:
     '''

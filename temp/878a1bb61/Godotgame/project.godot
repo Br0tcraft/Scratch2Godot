@@ -1,0 +1,20 @@
+config_version=5
+
+[application]
+
+config/name="Scratchgame"
+config/description="A Scratch project"
+config/version="1.0"
+run/main_scene="res://main.tscn"
+config/features=PackedStringArray("4.3", "Mobile")
+run/max_fps=30
+config/icon="res://icon.svg"
+[display]
+
+window/size/viewport_width=480
+window/size/viewport_height=360
+window/stretch/mode="canvas_items"
+
+[rendering]
+
+renderer/rendering_method="mobile" 

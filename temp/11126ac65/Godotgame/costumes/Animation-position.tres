@@ -1,0 +1,14 @@
+[gd_resource type="SpriteFrames" load_steps=1 format=3 uid="uid://8050071883689765608"]
+
+[ext_resource type="Texture2D" uid="uid://856303c0979d7b5863b41838d8324c92" path="res://856303c0979d7b5863b41838d8324c92.png" id="id_856303c0979d7b5863b41838d8324c92"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("id_856303c0979d7b5863b41838d8324c92")
+}],
+"loop": false,
+"name": &"costume1",
+"speed": 0.0
+}]

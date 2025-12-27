@@ -1,4 +1,6 @@
 ## Scratch2Godot - Work in Progress
+[![Python Tests](https://github.com/br0tcraft/Scratch2Godot/workflows/Python%20tests/badge.svg)](https://github.com/br0tcraft/Scratch2Godot/actions?query=workflow%3A%22Python+tests%22) [![Release on Tag](https://github.com/br0tcraft/Scratch2Godot/workflows/Create%20Release/badge.svg)](https://github.com/br0tcraft/Scratch2Godot/actions?query=workflow%3A%22Create+Release%22)
+
 Scratch2Godot is a converter that transforms Scratch projects (.sb3) into Godot projects. 
 
 ![image](resources/icon.svg)
@@ -39,8 +41,9 @@ Important Note: This tool is still in development and not fully functional. Some
 **In Development / Planned:**
 
 - Full support for event handling *(except for* `when [loudness] > ()`*), currently under development and not yet stable.*
-- Complete support for additional block categories (e.g. sensing, variables)
-- Improved error handling, debugging output, and overall conversion stability  
+- Support for additional block categories (sensing, variables — more blocks will be added iteratively)
+- Improved error handling, structured logging, and more robust conversion flows
+- Improved clone behavior: clones copy group membership and runtime children (best-effort), get unique names and clone metadata (`__is_clone`, `__clone_id`), and property-copying is attempted for simple properties. Added basic support for common list blocks (add/delete/insert/item/length/contains/replace) and CI tests. 
 
 ### **1. System Requirements**
 

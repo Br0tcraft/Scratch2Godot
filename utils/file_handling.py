@@ -1,7 +1,10 @@
 import subprocess
 from PIL import Image
 import numpy as np
-import cv2
+try:
+    import cv2
+except Exception:
+    cv2 = None
 def resize_png_half(original_path: str, resized_path: str) -> None:
     try:
         with Image.open(original_path) as img:
@@ -31,8 +34,9 @@ def svg_to_png(svg_path: str, png_path: str, fonts: dict) -> None:
 
     def convert_svg_to_png():
         try:
-            subprocess.run(["magick", "-background", "none", svg_path, png_path])
-        except subprocess.CalledProcessError:
+            subprocess.run(["magick", "-background", "none", svg_path, png_path], check=True)
+        except Exception as e:
+            logger.warning("Could not convert SVG to PNG with ImageMagick: %s; falling back to placeholder PNG", e)
             empty_png(png_path)
 
     def empty_png(png_path: str):
@@ -45,7 +49,13 @@ def svg_to_png(svg_path: str, png_path: str, fonts: dict) -> None:
     replace_font_names_in_svg()
     convert_svg_to_png()
 
+import logging
+logger = logging.getLogger(__name__)
+
 def collision_shape2d(png_path: str) -> str:
+    if cv2 is None:
+        logger.warning("cv2 (OpenCV) not available; using default collision polygon for %s", png_path)
+        return "PackedVector2Array()\nposition = Vector2(0, 0)"
     try:
         img = Image.open(png_path).convert("L")
         img_array = np.array(img)
@@ -58,9 +68,9 @@ def collision_shape2d(png_path: str) -> str:
         points = [(int(pt[0][0]), int(pt[0][1])) for pt in hull]
         godot_polygon = ", ".join([f"{x}, {y}" for x, y in points])
         return f"PackedVector2Array({godot_polygon})\nposition = Vector2({img.size[0] // -2}, {img.size[1] // -2})"
-    except:
+    except Exception as e:
+        logger.exception("Error creating collision polygon for %s: %s", png_path, e)
         return "PackedVector2Array()\nposition = Vector2(0, 0)"
-
     
 def import_file(name: str, uid: str) -> str:
     '''This is uninteresting, it makes just an .import file for every costume with stuff i don't understand (This is copy paste)'''

@@ -1,0 +1,14 @@
+[gd_resource type="SpriteFrames" load_steps=1 format=3 uid="uid://8121303267827530141"]
+
+[ext_resource type="Texture2D" uid="uid://2111167176fe9dcd72ea84689b484700" path="res://2111167176fe9dcd72ea84689b484700.png" id="id_2111167176fe9dcd72ea84689b484700"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("id_2111167176fe9dcd72ea84689b484700")
+}],
+"loop": false,
+"name": &"fishTile_U95_081",
+"speed": 0.0
+}]

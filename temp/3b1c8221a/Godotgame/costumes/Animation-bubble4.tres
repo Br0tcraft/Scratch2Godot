@@ -1,0 +1,14 @@
+[gd_resource type="SpriteFrames" load_steps=1 format=3 uid="uid://6307784850637974114"]
+
+[ext_resource type="Texture2D" uid="uid://d5437f6269ed9e838010994c7c514b88" path="res://d5437f6269ed9e838010994c7c514b88.png" id="id_d5437f6269ed9e838010994c7c514b88"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("id_d5437f6269ed9e838010994c7c514b88")
+}],
+"loop": false,
+"name": &"bubble",
+"speed": 0.0
+}]

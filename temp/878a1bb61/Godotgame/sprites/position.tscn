@@ -1,0 +1,44 @@
+[gd_scene load_steps=2 format=3 uid="uid://sprite-position"]
+
+[ext_resource type="SpriteFrames" uid="uid://3713415060842844316" path="res://costumes/Animation-position.tres" id="frames-position"]
+[ext_resource type="Script" path="res://scripts/sprite-position.gd" id="id_sprite-position"]
+[ext_resource type="Shader" path="res://assets/effects.gdshader" id="id_shader_position"]
+[ext_resource type="PackedScene" uid="uid://bubble" path="res://assets/bubble.tscn" id="bubble"]
+[ext_resource type="Script" path="res://scripts/position-event_whenflagclicked-w6nl4.gd" id="id_position-event_whenflagclicked-w6nl4"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_position"]
+shader = ExtResource("id_shader_position")
+shader_parameter/color_shift = 0.0
+shader_parameter/fisheye = 0.0
+shader_parameter/whirl = 0.0
+shader_parameter/pixelate = 0.0
+shader_parameter/mosaic = 0.0
+shader_parameter/brightness = 0.0
+shader_parameter/ghost = 0.0
+shader_parameter/sprite_size = 10.0
+shader_parameter/saturation = null
+shader_parameter/opaque = null
+shader_parameter/red = null
+shader_parameter/green = null
+shader_parameter/blue = null
+shader_parameter/tint_color = Color(1, 1, 1, 1)
+
+[node name="position" type="Node2D"]
+script = ExtResource("id_sprite-position")
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("frames-position")
+animation = &"costume1"
+material = SubResource("ShaderMaterial_position")
+[node name="Area2D" type="Area2D" parent="Sprite"]
+[node name="Collision-costume1" type="CollisionPolygon2D" parent="Sprite/Area2D"]
+polygon = PackedVector2Array()
+position = Vector2(0, 0)
+disabled = false
+[node name="bubble" parent="." instance=ExtResource("bubble")]
+visible = false
+scale = Vector2(0.6, 0.6)
+[node name="scripts" type="Node2D" parent="Sprite"]
+[node name="event_whenflagclicked-w6nl4" type="Node2D" parent="Sprite/scripts"]
+script = ExtResource("id_position-event_whenflagclicked-w6nl4")[connection signal="body_entered" from="Sprite/Area2D" to="." method="_body_entered"]
+[connection signal="input_event" from="Sprite/Area2D" to="." method="_input_event"]
+

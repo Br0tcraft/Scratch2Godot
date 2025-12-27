@@ -1,11 +1,14 @@
+import logging
 from utils.helpers import get_loop_varname, convert_key
+logger = logging.getLogger(__name__)
+
 def convert_blocks(blocks: dict, block: dict, code: str, name: str, spaces: int):
     var = {}
     def convert_block(blocks: dict, block: dict, space: int, code: str, name: str):
         spaces = "\t" * space
-        print(block)
+        logger.debug("Converting block: %s", block)
         while "opcode" in block and "next" in block:
-            print("opcode:" + str(block["opcode"]))
+            logger.debug("opcode: %s", block.get("opcode"))
             try:
                 match block["opcode"]:
                     #motion-blocks
@@ -542,22 +545,49 @@ def convert_blocks(blocks: dict, block: dict, code: str, name: str, spaces: int)
                                 f'''\n{spaces}print("WARNING: The content in the block 'repeat until <>: {"{}"}' in the file 'res://scripts/{name}.gd' does not exist ''")\n'''
                                 f'{spaces}correctur.help()\n'
                             )
-                    
+                    case "control_create_clone_of":
+                        # Create clone: prefer instancing the original PackedScene if available,
+                        # otherwise fall back to duplicating the node. Ensure unique name and copy properties.
+                        try:
+                            target = repeat_content(blocks, block, "CLONE_OPTION")
+                            target = str(target).replace('"', '')
+                            code += "\n" + spaces + "var __packed = null\n"
+                            code += spaces + f"if ResourceLoader.exists('res://sprites/{target}.tscn'):\n\t__packed = load('res://sprites/{target}.tscn')\n"
+                            code += spaces + "if __packed != null and __packed is PackedScene:\n\tvar __new_clone = __packed.instantiate()\n"
+                            code += spaces + "else:\n\tvar __new_clone = object.duplicate(true)\n"
+                            code += spaces + "__new_clone.name = object.name + '_clone_' + str(OS.get_ticks_msec())\n"
+                            code += spaces + "try:\n\t__new_clone.set('__is_clone', true)\n\t__new_clone.set('__clone_id', OS.get_ticks_msec())\nexcept:\n\tpass\n"
+                            code += spaces + "main.add_child(__new_clone)\n"
+                            # copy groups (so clone preserves group membership)
+                            code += spaces + "for __g in object.get_groups():\n\t__new_clone.add_to_group(__g)\n"
+                            # copy runtime children (best-effort)
+                            code += spaces + "for __child in object.get_children():\n\ttry:\n\t\tvar __dup = __child.duplicate(true)\n\t\t__new_clone.add_child(__dup)\n\texcept:\n\t\tpass\n"
+                            # Copy properties safely
+                            code += spaces + "for __p in object.get_property_list():\n"
+                            code += spaces + "\tif typeof(__p) == TYPE_DICTIONARY and __p.has('name'):\n"
+                            code += spaces + "\t\tvar __n = __p['name']\n"
+                            code += spaces + "\t\tif not __n.begins_with('_') and __n != 'name':\n"
+                            code += spaces + "\t\t\tif object.has_method('get') and __new_clone.has_method('set'):\n"
+                            code += spaces + "\t\t\t\ttry:\n"
+                            code += spaces + "\t\t\t\t\t__new_clone.set(__n, object.get(__n))\n"
+                            code += spaces + "\t\t\t\texcept:\n"
+                            code += spaces + "\t\t\t\t\tpass\n"
+                            code += spaces + "# Note: signal connections are not copied automatically\n"
+                            code += spaces + "__new_clone.call_deferred('_on_clone_init')\n"
+                        except Exception as e:
+                            logger.exception("Error creating clone: %s", e)
+                            code += spaces + 'correctur.help()\n'                    
                     #event blocks
                     case "event_broadcast":
-                        
                         if "BROADCAST_INPUT" in block["inputs"]:
                             var["message"] = '""'
                             code += "\n" + spaces + 'message = correctur.ms('+ str(repeat_content(blocks, block, "BROADCAST_INPUT")) + f', "string", "res://scripts/{name}.gd", "broadcast (!)")\n'
                             code += spaces + 'main.broadcastlist[message] = 0\n'
                             code += spaces + 'main.broadcast = message\n'
                         else:
-                            code += (
-                                f'''\n{spaces}print("WARNING: The message in the block 'broadcast' in the file 'res://scripts/{name}.gd' does not exist ''")\n'''
-                                f'{spaces}correctur.help()\n'
-                            )
+                            logger.warning("The message in the block 'broadcast' in the file 'res://scripts/%s.gd' does not exist", name)
+                            code += spaces + 'correctur.help()\n'
                     case "event_broadcastandwait":
-                        
                         if "BROADCAST_INPUT" in block["inputs"]:
                             var["message"] = '""'
                             code += "\n" + spaces + 'message = correctur.ms('+ str(repeat_content(blocks, block, "BROADCAST_INPUT")) + f', "string", "res://scripts/{name}.gd", "broadcast (!)")\n'
@@ -566,16 +596,146 @@ def convert_blocks(blocks: dict, block: dict, code: str, name: str, spaces: int)
                             code += spaces + 'await get_tree().process_frame\n'
                             code += spaces + 'while main.broadcastlist[message] > 0:\n'
                             code += spaces + '\tawait get_tree().process_frame\n'
-                        #hier weiter machen
                         else:
-                            code += (
-                                f'''\n{spaces}print("WARNING: The message in the block 'broadcast' in the file 'res://scripts/{name}.gd' does not exist ''")\n'''
-                                f'{spaces}correctur.help()\n'
-                            )
+                            logger.warning("The message in the block 'broadcast' in the file 'res://scripts/%s.gd' does not exist", name)
+                            code += spaces + 'correctur.help()\n'
+
+                    # variable blocks
+                    case "data_setvariableto":
+                        # fields: VARIABLE (name) ; inputs: VALUE
+                        try:
+                            varname = block["fields"]["VARIABLE"][0]
+                            value_expr = repeat_content(blocks, block, "VALUE") if "VALUE" in block["inputs"] else '0'
+                            clean = convert_string(varname)
+                            code += "\n" + spaces + f'var __found_{clean} = false\n'
+                            code += spaces + f'for __p in get_property_list():\n\tif __p["name"] == "{clean}":\n\t\t__found_{clean} = true\n\t\tbreak\n'
+                            code += spaces + f'if __found_{clean}:\n\t{clean} = {value_expr}\nelse:\n\tmain.{clean} = {value_expr}\n'
+                        except Exception as e:
+                            logger.exception("Error converting set variable block: %s", e)
+                            code += spaces + 'correctur.help()\n'
+                    case "data_changevariableby":
+                        try:
+                            varname = block["fields"]["VARIABLE"][0]
+                            value_expr = repeat_content(blocks, block, "VALUE") if "VALUE" in block["inputs"] else '0'
+                            clean = convert_string(varname)
+                            code += "\n" + spaces + f'var __found_{clean} = false\n'
+                            code += spaces + f'for __p in get_property_list():\n\tif __p["name"] == "{clean}":\n\t\t__found_{clean} = true\n\t\tbreak\n'
+                            code += spaces + f'if __found_{clean}:\n\t{clean} += {value_expr}\nelse:\n\tmain.{clean} += {value_expr}\n'
+                        except Exception as e:
+                            logger.exception("Error converting change variable block: %s", e)
+                            code += spaces + 'correctur.help()\n'
+                    case "data_showvariable":
+                        # no UI for variables in Godot yet; warn
+                        try:
+                            varname = block["fields"]["VARIABLE"][0]
+                            logger.info("Variable UI show requested for '%s' (no-op)", varname)
+                        except Exception:
+                            logger.warning("Variable UI show block missing name")
+                    case "data_hidevariable":
+                        try:
+                            varname = block["fields"]["VARIABLE"][0]
+                            logger.info("Variable UI hide requested for '%s' (no-op)", varname)
+                        except Exception:
+                            logger.warning("Variable UI hide block missing name")
+
+                    # list blocks
+                    case "data_addtolist" | "data_add_to_list":
+                        try:
+                            listname = block["fields"]["LIST"][0]
+                            item = repeat_content(blocks, block, "ITEM") if "ITEM" in block.get("inputs", {}) else '""'
+                            code += "\n" + spaces + f'if not main.has_method("__list_exists_{listname}") and not main.has_meta("_list_{listname}"):\n\tmain.{listname} = []\n'
+                            code += spaces + f'main.{listname}.append({item})\n'
+                        except Exception as e:
+                            logger.exception("Error converting add to list: %s", e)
+                            code += spaces + 'correctur.help()\n'
+                    case "data_deleteoflist" | "data_delete_of_list":
+                        try:
+                            listname = block["fields"]["LIST"][0]
+                            index_expr = repeat_content(blocks, block, "INDEX") if "INDEX" in block.get("inputs", {}) else '"all"'
+                            code += "\n" + spaces + f'if main.get("{listname}", null) == null:\n\tmain.{listname} = []\n'
+                            code += spaces + f'var __idx = {index_expr}\n'
+                            code += spaces + 'if str(__idx) == "all":\n\tmain.' + listname + ' = []\n'
+                            code += spaces + 'elif str(__idx) == "last":\n\tif main.' + listname + ':\n\t\tmain.' + listname + '.erase(main.' + listname + '[-1])\n'
+                            code += spaces + 'elif str(__idx) == "random":\n\tif main.' + listname + ':\n\t\tmain.' + listname + '.remove_at(randi() % main.' + listname + '.size())\n'
+                            code += spaces + 'else:\n\tvar __pos = int(__idx) - 1\n\tif __pos >= 0 and __pos < main.' + listname + '.size():\n\t\tmain.' + listname + '.remove_at(__pos)\n'
+                        except Exception as e:
+                            logger.exception("Error converting delete of list: %s", e)
+                            code += spaces + 'correctur.help()\n'
+                    case "data_insertatlist" | "data_insert_at_list":
+                        try:
+                            listname = block["fields"]["LIST"][0]
+                            index_expr = repeat_content(blocks, block, "INDEX") if "INDEX" in block.get("inputs", {}) else '1'
+                            item = repeat_content(blocks, block, "ITEM") if "ITEM" in block.get("inputs", {}) else '""'
+                            code += "\n" + spaces + f'if main.get("{listname}", null) == null:\n\tmain.{listname} = []\n'
+                            code += spaces + f'var __ins = int({index_expr}) - 1\n'
+                            code += spaces + f'if __ins < 0: __ins = 0\n'
+                            code += spaces + f'main.{listname}.insert(__ins, {item})\n'
+                        except Exception as e:
+                            logger.exception("Error converting insert at list: %s", e)
+                            code += spaces + 'correctur.help()\n'
+                    case "data_deletealloflist" | "data_delete_all_of_list":
+                        try:
+                            listname = block["fields"]["LIST"][0]
+                            code += "\n" + spaces + f'main.{listname} = []\n'
+                        except Exception as e:
+                            logger.exception("Error converting delete all of list: %s", e)
+                            code += spaces + 'correctur.help()\n'
+                    case "data_replaceitemoflist" | "data_replace_item_of_list":
+                        try:
+                            listname = block["fields"]["LIST"][0]
+                            index_expr = repeat_content(blocks, block, "INDEX") if "INDEX" in block.get("inputs", {}) else '1'
+                            item = repeat_content(blocks, block, "ITEM") if "ITEM" in block.get("inputs", {}) else '""'
+                            code += "\n" + spaces + f'if main.get("{listname}", null) == null:\n\tmain.{listname} = []\n'
+                            code += spaces + f'var __pos = int({index_expr}) - 1\n'
+                            code += spaces + f'if str({index_expr}) == "last":\n\t__pos = main.{listname}.size() - 1\n'
+                            code += spaces + f'elif str({index_expr}) == "random":\n\t__pos = randi() % main.{listname}.size()\n'
+                            code += spaces + f'if __pos >= 0 and __pos < main.{listname}.size():\n\tmain.{listname}[__pos] = {item}\n'
+                        except Exception as e:
+                            logger.exception("Error converting replace item of list: %s", e)
+                            code += spaces + 'correctur.help()\n'
+                    case "data_setlistitem" | "data_set_list_item":
+                        try:
+                            listname = block["fields"]["LIST"][0]
+                            index_expr = repeat_content(blocks, block, "INDEX") if "INDEX" in block.get("inputs", {}) else '1'
+                            item = repeat_content(blocks, block, "ITEM") if "ITEM" in block.get("inputs", {}) else '""'
+                            code += "\n" + spaces + f'if main.get("{listname}", null) == null:\n\tmain.{listname} = []\n'
+                            code += spaces + f'var __pos = int({index_expr}) - 1\n'
+                            code += spaces + f'if __pos < 0: __pos = 0\n'
+                            code += spaces + f'if __pos >= main.{listname}.size():\n\tmain.{listname}.append({item})\nelse:\n\tmain.{listname}[__pos] = {item}\n'
+                        except Exception as e:
+                            logger.exception("Error converting set list item: %s", e)
+                            code += spaces + 'correctur.help()\n'
+
+                    # sensing blocks (some implemented)
+                    case "sensing_mousex":
+                        code += "\n" + spaces + 'get_global_mouse_position().x\n'
+                    case "sensing_mousey":
+                        code += "\n" + spaces + 'get_global_mouse_position().y * -1.0\n'
+                    case "sensing_timer":
+                        code += "\n" + spaces + 'OS.get_ticks_msec() / 1000.0\n'
+                    case "sensing_touchingobject":
+                        try:
+                            subject = repeat_content(blocks, block, "TOUCHINGOBJECT_MENU")
+                            code += "\n" + spaces + f'is_touching_other_sprite({subject})\n'
+                        except Exception:
+                            code += "\n" + spaces + 'false\n'
+                    case "sensing_keypressed":
+                        try:
+                            key = block["fields"]["KEY_OPTION"][0]
+                            code += "\n" + spaces + f'Input.is_key_pressed({convert_key(key)})\n'
+                        except Exception:
+                            code += "\n" + spaces + 'false\n'
+                    case "sensing_loudness":
+                        # intentionally unsupported for now
+                        logger.warning("sensing_loudness is not supported (skipping)")
+                        code += "\n" + spaces + '0\n'
+
                     case _:
-                        code += spaces + f'''print("WARNING: unknown block '{block["opcode"]}'")\n'''
-            except:
-                code += spaces + f'''print("WARNING: error by converting block '{block["opcode"]}'")\n'''
+                        logger.warning("Unknown block opcode '%s' in script res://scripts/%s.gd", block.get("opcode"), name)
+                        code += spaces + f'print("WARNING: unknown block {block.get("opcode")}")\n'
+            except Exception as e:
+                logger.exception("Error while converting block '%s': %s", block.get("opcode"), e)
+                code += spaces + f'print("WARNING: error by converting block {block.get("opcode")}")\n'
             if block["next"] == None:
                         break
             if "next" in blocks[block["next"]]:
@@ -593,14 +753,14 @@ def convert_blocks(blocks: dict, block: dict, code: str, name: str, spaces: int)
     return code
 def repeat_content(blocks: dict, block: list, input_type: str):
     if "opcode" not in block:
-        print("Error in Block: " + str(block))
+        logger.error("Error in Block: %s", block)
         return 0
-    print("Content of: " + str(block["opcode"]))
+    logger.debug("Content of: %s", block["opcode"])
     if not( input_type in block["inputs"] or input_type in block["fields"]):
-        print("input/field: " + str(input_type) + " is not in block: " + str(block["opcode"]))
+        logger.warning("input/field: %s is not in block: %s", input_type, block["opcode"])
         return 0
     value = block["inputs"][input_type] if input_type in block["inputs"] else block["fields"][input_type]
-    print("The content of: " + str(input_type) + " is: " + str(value))
+    logger.debug("The content of: %s is: %s", input_type, value)
     match value[0]:
         case 1 | 2 | 3:
             if isinstance(value[1], list):
@@ -618,6 +778,60 @@ def repeat_content(blocks: dict, block: list, input_type: str):
                         #operator blocks
                         case "operator_add":
                             return(f'op.add({repeat_content(blocks, blocks[value[1]], "NUM1")},{repeat_content(blocks, blocks[value[1]], "NUM2")})')
+                        case "data_variable":
+                            try:
+                                vname = blocks[value[1]]["fields"]["VARIABLE"][0]
+                                return f'{convert_string(vname)}'
+                            except Exception:
+                                logger.warning("Unknown variable reporter content: %s", blocks[value[1]])
+                                return '0'
+                        case "sensing_mousex":
+                            return 'get_global_mouse_position().x'
+                        case "sensing_mousey":
+                            return 'get_global_mouse_position().y * -1.0'
+                        case "sensing_timer":
+                            return 'OS.get_ticks_msec() / 1000.0'
+                        case "sensing_keypressed":
+                            try:
+                                k = blocks[value[1]]["fields"]["KEY_OPTION"][0]
+                                return f'Input.is_key_pressed({convert_key(k)})'
+                            except Exception:
+                                return 'false'
+                        case "sensing_touchingobject":
+                            try:
+                                val = repeat_content(blocks, blocks[value[1]], "TOUCHINGOBJECT_MENU")
+                                return f'is_touching_other_sprite({val})'
+                            except Exception:
+                                return 'false'
+
+                        # list reporters
+                        case "data_itemoflist" | "data_item_of_list":
+                            try:
+                                listname = blocks[value[1]]["fields"]["LIST"][0]
+                                index = repeat_content(blocks, blocks[value[1]], "INDEX") if "INDEX" in blocks[value[1]].get("inputs", {}) else '1'
+                                return f'(main.get("{listname}", [])[(int({index}) - 1) if int(str({index}).is_valid_int()) else 0] if main.get("{listname}", []) and int(str({index}).is_valid_int()) and (int({index}) - 1) >= 0 and (int({index}) - 1) < main.get("{listname}", []).size() else "")'
+                            except Exception:
+                                return '""'
+                        case "data_itemnumoflist" | "data_item_num_of_list":
+                            try:
+                                listname = blocks[value[1]]["fields"]["LIST"][0]
+                                item = repeat_content(blocks, blocks[value[1]], "ITEM")
+                                return f'(main.get("{listname}", []).find({item}) + 1 if main.get("{listname}", []).find({item}) != -1 else 0)'
+                            except Exception:
+                                return '0'
+                        case "data_lengthoflist" | "data_length_of_list":
+                            try:
+                                listname = blocks[value[1]]["fields"]["LIST"][0]
+                                return f'len(main.get("{listname}", []))'
+                            except Exception:
+                                return '0'
+                        case "data_listcontainsitem" | "data_list_contains_item":
+                            try:
+                                listname = blocks[value[1]]["fields"]["LIST"][0]
+                                item = repeat_content(blocks, blocks[value[1]], "ITEM")
+                                return f'({item} in main.get("{listname}", []))'
+                            except Exception:
+                                return 'false'
                         case "operator_subtract":
                             return(f'op.sub({repeat_content(blocks, blocks[value[1]], "NUM1")},{repeat_content(blocks, blocks[value[1]], "NUM2")})')
                         case "operator_multiply":
@@ -761,7 +975,7 @@ def create_gd_script(blocks: dict, block_opcode: str, path: str, name: str, spri
     var = {}
     current_block = blocks[block_opcode]
             
-    header = 'extends Node2D\n\nvar main = ""\nvar object = ""\nvar animation = ""\nvar mat = ""\n'
+    header = 'extends Node2D\n\nvar main = ""\nvar object = ""\nvar animation = ""\nvar mat = ""\n# clone meta (set when creating a clone):\nvar __is_clone: bool = false\nvar __clone_id: int = 0\n'
     main = "func _ready() -> void:\n"
     if sprite_type == "Background":
         header += 'var broadcast = ""\n'
@@ -774,12 +988,21 @@ def create_gd_script(blocks: dict, block_opcode: str, path: str, name: str, spri
     content = ""
     match current_block["opcode"]:
         case "event_whenflagclicked":
-            content = convert_blocks(blocks, blocks[current_block["next"]], main, name, 1)
+            if current_block.get("next"):
+                content = convert_blocks(blocks, blocks[current_block["next"]], main, name, 1)
+            else:
+                content = ""
             new = ""
         case "event_whenthisspriteclicked":
             main += 'func _on_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:\n\tif event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:\n'
             content = convert_blocks(blocks, blocks[current_block["next"]], main, name, 2)
             new = '[connection signal="input_event" from="Sprite/Area2D" to="Sprite/scripts/NAME" method="_on_event"]\n'
+        case "event_when_i_start_as_a_clone":
+            # Create a simple clone-init function and run the stack when clones are created
+            main += 'func _on_clone_init() -> void:\n'
+            content = convert_blocks(blocks, blocks[current_block["next"]], main, name, 2)
+            # the create_clone block adds a call to this function when creating the clone
+            new = ''
         case "event_whenkeypressed":
             if current_block["fields"]["KEY_OPTION"][0] == "any":
                 main += 'func _input(event: InputEvent) -> void:\n\tif event is InputEventKey and not event.echo and event.pressed\n'

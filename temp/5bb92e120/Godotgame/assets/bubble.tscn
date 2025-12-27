@@ -1,0 +1,137 @@
+[gd_scene load_steps=11 format=3 uid="uid://bubble"]
+
+[ext_resource type="Script" path="res://scripts/bubble.gd" id="1_f5csi"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s83l2"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+anti_aliasing_size = 0.495
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jei3o"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dqjoi"]
+bg_color = Color(1, 1, 1, 1)
+border_color = Color(0.589095, 0.589096, 0.589096, 0.65098)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+anti_aliasing_size = 0.495
+
+[sub_resource type="SystemFont" id="SystemFont_tsvgw"]
+
+[sub_resource type="Theme" id="Theme_hxgfb"]
+default_font = SubResource("SystemFont_tsvgw")
+Panel/styles/panel = SubResource("StyleBoxFlat_dqjoi")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mkhuh"]
+bg_color = Color(1, 1, 1, 1)
+skew = Vector2(0, 0.925)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+anti_aliasing_size = 0.495
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o5gvx"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+anti_aliasing_size = 0.495
+
+[sub_resource type="SystemFont" id="SystemFont_d5o7h"]
+disable_embedded_bitmaps = false
+msdf_pixel_range = 266
+
+[sub_resource type="LabelSettings" id="LabelSettings_kchbo"]
+font = SubResource("SystemFont_d5o7h")
+font_size = 25
+font_color = Color(0, 0, 0, 1)
+
+[node name="Bubble" type="Node2D"]
+script = ExtResource("1_f5csi")
+
+[node name="secs" type="Timer" parent="."]
+
+[node name="think" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_top = -24.0
+offset_right = 40.0
+offset_bottom = 16.0
+
+[node name="bubble1" type="Panel" parent="think"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 4.41
+offset_right = 21.0
+offset_bottom = 13.41
+theme_override_styles/panel = SubResource("StyleBoxFlat_s83l2")
+
+[node name="bubble2" type="Panel" parent="think"]
+layout_mode = 0
+offset_top = 20.12
+offset_right = 4.5
+offset_bottom = 24.62
+theme_override_styles/panel = SubResource("StyleBoxFlat_s83l2")
+
+[node name="bubble3" type="Panel" parent="think"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 12.32
+offset_right = 12.0
+offset_bottom = 18.32
+theme_override_styles/panel = SubResource("StyleBoxFlat_s83l2")
+
+[node name="speech" type="PanelContainer" parent="."]
+clip_contents = true
+custom_minimum_size = Vector2(50.705, 45.393)
+offset_left = -6.0
+offset_top = -45.0
+offset_right = 44.705
+offset_bottom = 0.393002
+theme_override_styles/panel = SubResource("StyleBoxEmpty_jei3o")
+
+[node name="Bubble" type="Panel" parent="speech"]
+custom_minimum_size = Vector2(24.863, 22.59)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = SubResource("Theme_hxgfb")
+theme_override_styles/panel = SubResource("StyleBoxFlat_mkhuh")
+
+[node name="Box" type="MarginContainer" parent="."]
+offset_top = -58.0
+offset_right = 60.51
+offset_bottom = -16.0
+size_flags_horizontal = 3
+
+[node name="Bubble" type="Panel" parent="Box"]
+custom_minimum_size = Vector2(20.17, 12.66)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_o5gvx")
+
+[node name="Seperator" type="HBoxContainer" parent="Box"]
+layout_mode = 2
+
+[node name="gap" type="AspectRatioContainer" parent="Box/Seperator"]
+layout_mode = 2
+
+[node name="text" type="Label" parent="Box/Seperator"]
+custom_minimum_size = Vector2(0, 42.375)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 2
+label_settings = SubResource("LabelSettings_kchbo")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="gap2" type="AspectRatioContainer" parent="Box/Seperator"]
+layout_mode = 2
+
+[connection signal="timeout" from="secs" to="." method="_on_secs_timeout"]
