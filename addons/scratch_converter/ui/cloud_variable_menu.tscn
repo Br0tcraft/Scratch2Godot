@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://bbm51t6ap8cgf"]
+
+[ext_resource type="Script" uid="uid://betiw60yrn6el" path="res://addons/scratch_converter/ui/cloud_variable_settings.gd" id="1_2iruw"]
+
+[node name="HFlowContainer" type="HFlowContainer" unique_id=289170058]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 2
+script = ExtResource("1_2iruw")
+
+[node name="MODE" type="OptionButton" parent="." unique_id=614991393]
+unique_name_in_owner = true
+layout_mode = 2
+selected = 0
+item_count = 3
+popup/item_0/text = "Connect to cloud variable Server"
+popup/item_0/id = 1
+popup/item_1/text = "Store in local Storage"
+popup/item_1/id = 2
+popup/item_2/text = "Ignore"
+popup/item_2/id = 0
+
+[node name="VARIABLE" type="Label" parent="." unique_id=1094840656]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3

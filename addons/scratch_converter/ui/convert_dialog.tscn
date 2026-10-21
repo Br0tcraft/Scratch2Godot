@@ -1,0 +1,86 @@
+[gd_scene format=3 uid="uid://b6h47w2w4c32d"]
+
+[ext_resource type="Script" uid="uid://cva0h533g5s81" path="res://addons/scratch_converter/ui/convert_dialog.gd" id="1_gbitl"]
+
+[sub_resource type="DPITexture" id="DPITexture_4psi5"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#e0e0e0\" d=\"m7 1v6h-6v2h6v6h2v-6h6v-2h-6v-6z\"/></svg>
+"
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(0.83, 0.78, 0.62, 1)
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4psi5"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.101960786, 0.101960786, 0.101960786, 0)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="DPITexture" id="DPITexture_cvi22"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"#e0e0e0\" d=\"M9 1v2h6V1zM4 1a1 1 0 0 0-.691.291l-2 2a1 1 0 0 0 1.414 1.414l.293-.293v7.172l-.293-.293a1 1 0 0 0-1.414 1.414l2 2a1 1 0 0 0 1.414 0l2-2a1 1 0 0 0-1.414-1.414l-.293.293V4.412l.293.293a1 1 0 0 0 1.414-1.414l-2-2A1 1 0 0 0 4 1zm5 6v2h4V7zm0 6v2h2v-2z\"/></svg>
+"
+saturation = 2.0
+color_map = {
+Color(1, 0.37254903, 0.37254903, 1): Color(1, 0.47, 0.42, 1),
+Color(0.37254903, 1, 0.5921569, 1): Color(0.45, 0.95, 0.5, 1),
+Color(1, 0.8666667, 0.39607844, 1): Color(0.83, 0.78, 0.62, 1)
+}
+
+[node name="Control" type="Control" unique_id=859269097]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -736.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_gbitl")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=2031910599]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Button" type="Button" parent="VBoxContainer" unique_id=167708910]
+unique_name_in_owner = true
+layout_mode = 2
+text = "ddddd"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=1754970158]
+layout_mode = 2
+
+[node name="ADD" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=1040633778]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(7, 7)
+layout_mode = 2
+tooltip_text = "Convert a new Scratch Project into your Godot Project"
+theme_override_icons/icon = SubResource("DPITexture_4psi5")
+theme_override_styles/normal = SubResource("StyleBoxFlat_4psi5")
+icon_alignment = 1
+
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/HBoxContainer" unique_id=1036912159]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Settings" type="MenuButton" parent="VBoxContainer/HBoxContainer" unique_id=1825480866]
+layout_mode = 2
+theme_override_icons/icon = SubResource("DPITexture_cvi22")
+icon_alignment = 1
+item_count = 2
+popup/item_0/text = "Sort by name"
+popup/item_0/id = 0
+popup/item_1/text = "sort by creation time"
+popup/item_1/id = 1

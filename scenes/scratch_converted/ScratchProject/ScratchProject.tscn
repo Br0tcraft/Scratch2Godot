@@ -1,0 +1,272 @@
+[gd_scene format=3 uid="uid://dlka17al2lynu"]
+
+[ext_resource type="Script" uid="uid://04pggy0nxeq4" path="res://addons/scratch_converter/core/runtime/scratch_project.gd" id="1_7a228"]
+[ext_resource type="PackedScene" uid="uid://db2h24ysss7mg" path="res://scenes/scratch_converted/ScratchProject/stage.tscn" id="2_pmknc"]
+[ext_resource type="Script" path="res://scenes/scratch_converted/ScratchProject/stage.gd" id="3_vq64n"]
+[ext_resource type="Script" uid="uid://bm4lvudded1ny" path="res://addons/scratch_converter/core/runtime/scratch_costume.gd" id="4_pylvl"]
+[ext_resource type="Texture2D" uid="uid://cwws6h1qykqva" path="res://scenes/scratch_converted/ScratchProject/assets/stage/7141625bba8ec3ce5f285d27989560a1_tex.res" id="5_y02nc"]
+[ext_resource type="Script" uid="uid://dd4ii53185ux2" path="res://addons/scratch_converter/core/runtime/scratch_sound.gd" id="6_yc7lu"]
+[ext_resource type="PackedScene" uid="uid://c0rc3ftvscfdu" path="res://scenes/scratch_converted/ScratchProject/sprites/bubble.tscn" id="7_gtrha"]
+[ext_resource type="Script" path="res://scenes/scratch_converted/ScratchProject/sprites/bubble.gd" id="8_pvrtq"]
+[ext_resource type="Texture2D" uid="uid://d25flnki2jxuc" path="res://scenes/scratch_converted/ScratchProject/sprites/assets/bubble/d5437f6269ed9e838010994c7c514b88_tex.res" id="9_3jnj7"]
+[ext_resource type="PackedScene" uid="uid://cy0vrfn86m26w" path="res://scenes/scratch_converted/ScratchProject/sprites/bubble4.tscn" id="10_eg1rp"]
+[ext_resource type="Script" path="res://scenes/scratch_converted/ScratchProject/sprites/bubble4.gd" id="11_7vo6k"]
+[ext_resource type="Texture2D" uid="uid://b0m2rt8dpxjan" path="res://scenes/scratch_converted/ScratchProject/sprites/assets/bubble4/d5437f6269ed9e838010994c7c514b88_tex.res" id="12_dawhb"]
+[ext_resource type="PackedScene" uid="uid://cv38nst0olvpw" path="res://scenes/scratch_converted/ScratchProject/sprites/bubble3.tscn" id="13_e2rft"]
+[ext_resource type="Script" path="res://scenes/scratch_converted/ScratchProject/sprites/bubble3.gd" id="14_b7s24"]
+[ext_resource type="Texture2D" uid="uid://b413hp78hvq1m" path="res://scenes/scratch_converted/ScratchProject/sprites/assets/bubble3/d5437f6269ed9e838010994c7c514b88_tex.res" id="15_j8al2"]
+[ext_resource type="PackedScene" uid="uid://by6vseg0h16p4" path="res://scenes/scratch_converted/ScratchProject/sprites/bubble2.tscn" id="16_rqxb1"]
+[ext_resource type="Script" path="res://scenes/scratch_converted/ScratchProject/sprites/bubble2.gd" id="17_wcron"]
+[ext_resource type="Texture2D" uid="uid://djbytosab0w7k" path="res://scenes/scratch_converted/ScratchProject/sprites/assets/bubble2/d5437f6269ed9e838010994c7c514b88_tex.res" id="18_oa7vp"]
+[ext_resource type="PackedScene" uid="uid://b411d2sj5hrv" path="res://scenes/scratch_converted/ScratchProject/sprites/fish3.tscn" id="19_0iugl"]
+[ext_resource type="Script" path="res://scenes/scratch_converted/ScratchProject/sprites/fish3.gd" id="20_7hgvh"]
+[ext_resource type="Texture2D" uid="uid://dofqanigj2l1p" path="res://scenes/scratch_converted/ScratchProject/sprites/assets/fish3/6f55c559c48a464ec6480494f271c784_tex.res" id="21_g84ef"]
+[ext_resource type="PackedScene" uid="uid://b14ed46kkkp8d" path="res://scenes/scratch_converted/ScratchProject/sprites/fish2.tscn" id="22_gsab0"]
+[ext_resource type="Script" path="res://scenes/scratch_converted/ScratchProject/sprites/fish2.gd" id="23_d7hjk"]
+[ext_resource type="Texture2D" uid="uid://dgrqugt5nbn2r" path="res://scenes/scratch_converted/ScratchProject/sprites/assets/fish2/2111167176fe9dcd72ea84689b484700_tex.res" id="24_7wqpl"]
+[ext_resource type="PackedScene" uid="uid://cqu8vtwqnnyy1" path="res://scenes/scratch_converted/ScratchProject/sprites/fish1.tscn" id="25_1n2l7"]
+[ext_resource type="Script" path="res://scenes/scratch_converted/ScratchProject/sprites/fish1.gd" id="26_ic0w2"]
+[ext_resource type="Texture2D" uid="uid://ducxdsvn523eh" path="res://scenes/scratch_converted/ScratchProject/sprites/assets/fish1/800cf29bb8a1e1bf58eae0513c3f432a_tex.res" id="27_0qj7a"]
+[ext_resource type="PackedScene" uid="uid://dchnap4bljwth" path="res://scenes/scratch_converted/ScratchProject/sprites/fish4.tscn" id="28_hib8g"]
+[ext_resource type="Script" path="res://scenes/scratch_converted/ScratchProject/sprites/fish4.gd" id="29_7o43h"]
+[ext_resource type="Texture2D" uid="uid://djpshbhf7k3at" path="res://scenes/scratch_converted/ScratchProject/sprites/assets/fish4/b0f7c99a8b9045b443d457ad1471f401_tex.res" id="30_3il4a"]
+[ext_resource type="PackedScene" uid="uid://imyh374wt6d8" path="res://scenes/scratch_converted/ScratchProject/sprites/position.tscn" id="31_0wt6q"]
+[ext_resource type="Script" path="res://scenes/scratch_converted/ScratchProject/sprites/position.gd" id="32_7m6pl"]
+[ext_resource type="Texture2D" uid="uid://b4ktlsurvnw1h" path="res://scenes/scratch_converted/ScratchProject/sprites/assets/position/856303c0979d7b5863b41838d8324c92_tex.res" id="33_oc223"]
+[ext_resource type="PackedScene" uid="uid://buhmk2kcbkp74" path="res://scenes/scratch_converted/ScratchProject/sprites/dead.tscn" id="34_eq0hp"]
+[ext_resource type="Script" path="res://scenes/scratch_converted/ScratchProject/sprites/dead.gd" id="35_ss7jc"]
+[ext_resource type="Texture2D" uid="uid://ngnajoggrj10" path="res://scenes/scratch_converted/ScratchProject/sprites/assets/dead/2a1b24ed369fba366af40a1b292138d5_tex.res" id="36_g6uox"]
+
+[sub_resource type="Resource" id="Resource_3vtcd"]
+script = ExtResource("4_pylvl")
+name = "backdrop1"
+texture = ExtResource("5_y02nc")
+rotation_center = Vector2(240, 180)
+hitbox_polygon = PackedVector2Array()
+
+[sub_resource type="Resource" id="Resource_t74fb"]
+script = ExtResource("6_yc7lu")
+name = "pop"
+
+[sub_resource type="Resource" id="Resource_ooplx"]
+script = ExtResource("4_pylvl")
+name = "bubble"
+texture = ExtResource("9_3jnj7")
+rotation_center = Vector2(11.9375, 11.8125)
+hitbox_polygon = PackedVector2Array(-4.9375, -10.8125, -10.9375, -4.8125, -11.9375, -4.8125, -11.9375, 5.1875, -7.9375, 9.1875, -7.9375, 10.1875, -3.9375, 12.1875, 4.0625, 12.1875, 11.0625, 4.1875, 12.0625, 4.1875, 12.0625, -3.8125, 8.0625, -8.8125, 8.0625, -9.8125, -4.9375, -11.8125)
+hitbox_polygons = Array[PackedVector2Array]([PackedVector2Array(-4.9375, -10.8125, -10.9375, -4.8125, -11.9375, -4.8125, -11.9375, 5.1875, -7.9375, 9.1875, -7.9375, 10.1875, -3.9375, 12.1875, 4.0625, 12.1875, 11.0625, 4.1875, 12.0625, 4.1875, 12.0625, -3.8125, 8.0625, -8.8125, 8.0625, -9.8125, -4.9375, -11.8125)])
+
+[sub_resource type="Resource" id="Resource_tnuut"]
+script = ExtResource("4_pylvl")
+name = "bubble"
+texture = ExtResource("12_dawhb")
+rotation_center = Vector2(11.9375, 11.8125)
+hitbox_polygon = PackedVector2Array(-4.9375, -10.8125, -10.9375, -4.8125, -11.9375, -4.8125, -11.9375, 5.1875, -7.9375, 9.1875, -7.9375, 10.1875, -3.9375, 12.1875, 4.0625, 12.1875, 11.0625, 4.1875, 12.0625, 4.1875, 12.0625, -3.8125, 8.0625, -8.8125, 8.0625, -9.8125, -4.9375, -11.8125)
+hitbox_polygons = Array[PackedVector2Array]([PackedVector2Array(-4.9375, -10.8125, -10.9375, -4.8125, -11.9375, -4.8125, -11.9375, 5.1875, -7.9375, 9.1875, -7.9375, 10.1875, -3.9375, 12.1875, 4.0625, 12.1875, 11.0625, 4.1875, 12.0625, 4.1875, 12.0625, -3.8125, 8.0625, -8.8125, 8.0625, -9.8125, -4.9375, -11.8125)])
+
+[sub_resource type="Resource" id="Resource_1gp04"]
+script = ExtResource("4_pylvl")
+name = "bubble"
+texture = ExtResource("15_j8al2")
+rotation_center = Vector2(11.9375, 11.8125)
+hitbox_polygon = PackedVector2Array(-4.9375, -10.8125, -10.9375, -4.8125, -11.9375, -4.8125, -11.9375, 5.1875, -7.9375, 9.1875, -7.9375, 10.1875, -3.9375, 12.1875, 4.0625, 12.1875, 11.0625, 4.1875, 12.0625, 4.1875, 12.0625, -3.8125, 8.0625, -8.8125, 8.0625, -9.8125, -4.9375, -11.8125)
+hitbox_polygons = Array[PackedVector2Array]([PackedVector2Array(-4.9375, -10.8125, -10.9375, -4.8125, -11.9375, -4.8125, -11.9375, 5.1875, -7.9375, 9.1875, -7.9375, 10.1875, -3.9375, 12.1875, 4.0625, 12.1875, 11.0625, 4.1875, 12.0625, 4.1875, 12.0625, -3.8125, 8.0625, -8.8125, 8.0625, -9.8125, -4.9375, -11.8125)])
+
+[sub_resource type="Resource" id="Resource_s67iu"]
+script = ExtResource("4_pylvl")
+name = "bubble"
+texture = ExtResource("18_oa7vp")
+rotation_center = Vector2(11.9375, 11.8125)
+hitbox_polygon = PackedVector2Array(-4.9375, -10.8125, -10.9375, -4.8125, -11.9375, -4.8125, -11.9375, 5.1875, -7.9375, 9.1875, -7.9375, 10.1875, -3.9375, 12.1875, 4.0625, 12.1875, 11.0625, 4.1875, 12.0625, 4.1875, 12.0625, -3.8125, 8.0625, -8.8125, 8.0625, -9.8125, -4.9375, -11.8125)
+hitbox_polygons = Array[PackedVector2Array]([PackedVector2Array(-4.9375, -10.8125, -10.9375, -4.8125, -11.9375, -4.8125, -11.9375, 5.1875, -7.9375, 9.1875, -7.9375, 10.1875, -3.9375, 12.1875, 4.0625, 12.1875, 11.0625, 4.1875, 12.0625, 4.1875, 12.0625, -3.8125, 8.0625, -8.8125, 8.0625, -9.8125, -4.9375, -11.8125)])
+
+[sub_resource type="Resource" id="Resource_iefb7"]
+script = ExtResource("4_pylvl")
+name = "fishTile_077"
+texture = ExtResource("21_g84ef")
+rotation_center = Vector2(32, 32)
+hitbox_polygon = PackedVector2Array(7, -17, 3, -16, 0, -16, -9, -8, -9, -7, -16, -10, -22, -10, -30, -1, -31, -1, -31, 3, -22, 11, -22, 12, -13, 9, -10, 9, 0, 18, 8, 18, 10, 15, 10, 13, 16, 12, 19, 12, 31, 3, 31, -1, 20, -9, 18, -9, 17, -17, 17, -18, 7, -18)
+hitbox_polygons = Array[PackedVector2Array]([PackedVector2Array(7, -17, 3, -16, 0, -16, -9, -8, -9, -7, -16, -10, -22, -10, -30, -1, -31, -1, -31, 3, -22, 11, -22, 12, -13, 9, -10, 9, 0, 18, 8, 18, 10, 15, 10, 13, 16, 12, 19, 12, 31, 3, 31, -1, 20, -9, 18, -9, 17, -17, 17, -18, 7, -18)])
+
+[sub_resource type="Resource" id="Resource_rjaei"]
+script = ExtResource("4_pylvl")
+name = "fishTile_081"
+texture = ExtResource("24_7wqpl")
+rotation_center = Vector2(32, 32)
+hitbox_polygon = PackedVector2Array(12, -16, 3, -14, 0, -14, -8, -8, -8, -7, -12, -10, -12, -11, -16, -10, -19, -10, -28, -2, -29, -2, -27, 4, -27, 5, -1, 17, 11, 17, 21, 10, 23, 10, 28, 3, 29, 3, 26, -6, 26, -8, 23, -10, 21, -10, 18, -16, 18, -17, 12, -17)
+hitbox_polygons = Array[PackedVector2Array]([PackedVector2Array(12, -16, 3, -14, 0, -14, -8, -8, -8, -7, -12, -10, -12, -11, -16, -10, -19, -10, -28, -2, -29, -2, -27, 4, -27, 5, -1, 17, 11, 17, 21, 10, 23, 10, 28, 3, 29, 3, 26, -6, 26, -8, 23, -10, 21, -10, 18, -16, 18, -17, 12, -17)])
+
+[sub_resource type="Resource" id="Resource_xjfc4"]
+script = ExtResource("4_pylvl")
+name = "fishTile_079"
+texture = ExtResource("27_0qj7a")
+rotation_center = Vector2(32, 32)
+hitbox_polygon = PackedVector2Array(9, -23, 5, -22, 1, -22, -8, -16, -10, -16, -10, -10, -10, -8, -15, -11, -15, -12, -21, -11, -23, -11, -29, -1, -30, -1, -29, 5, -29, 7, -21, 15, -21, 16, -16, 16, -12, 12, -11, 12, -7, 20, -7, 21, 2, 23, 2, 24, 16, 24, 18, 20, 23, 20, 30, 9, 30, -5, 23, -16, 21, -16, 20, -22, 20, -24, 9, -24)
+hitbox_polygons = Array[PackedVector2Array]([PackedVector2Array(9, -23, 5, -22, 1, -22, -8, -16, -10, -16, -10, -10, -10, -8, -15, -11, -15, -12, -21, -11, -23, -11, -29, -1, -30, -1, -29, 5, -29, 7, -21, 15, -21, 16, -16, 16, -12, 12, -11, 12, -7, 20, -7, 21, 2, 23, 2, 24, 16, 24, 18, 20, 23, 20, 30, 9, 30, -5, 23, -16, 21, -16, 20, -22, 20, -24, 9, -24)])
+
+[sub_resource type="Resource" id="Resource_mbf0o"]
+script = ExtResource("4_pylvl")
+name = "fishTile_073"
+texture = ExtResource("30_3il4a")
+rotation_center = Vector2(32, 32)
+hitbox_polygon = PackedVector2Array(7, -19, -9, -12, -9, -6, -13, -9, -19, -9, -28, 0, -29, 0, -28, 6, -28, 8, -19, 15, -19, 16, -13, 16, -11, 13, -8, 13, 4, 22, 19, 22, 20, 20, 20, 17, 29, 9, 29, -2, 22, -10, 20, -10, 19, -18, 19, -20, 7, -20)
+hitbox_polygons = Array[PackedVector2Array]([PackedVector2Array(7, -19, -9, -12, -9, -6, -13, -9, -19, -9, -28, 0, -29, 0, -28, 6, -28, 8, -19, 15, -19, 16, -13, 16, -11, 13, -8, 13, 4, 22, 19, 22, 20, 20, 20, 17, 29, 9, 29, -2, 22, -10, 20, -10, 19, -18, 19, -20, 7, -20)])
+
+[sub_resource type="Resource" id="Resource_bxhin"]
+script = ExtResource("6_yc7lu")
+name = "Meow"
+
+[sub_resource type="Resource" id="Resource_0kjlq"]
+script = ExtResource("4_pylvl")
+name = "costume1"
+texture = ExtResource("33_oc223")
+rotation_center = Vector2(10, 9)
+hitbox_polygon = PackedVector2Array()
+
+[sub_resource type="Resource" id="Resource_npjc3"]
+script = ExtResource("6_yc7lu")
+name = "pop"
+
+[sub_resource type="Resource" id="Resource_4u3i5"]
+script = ExtResource("4_pylvl")
+name = "fishTile_096"
+texture = ExtResource("36_g6uox")
+rotation_center = Vector2(23, 22)
+hitbox_polygon = PackedVector2Array(9, -21, -5, -15, -7, -15, -8, -4, -8, -1, -12, -1, -10, -4, -10, -6, -15, -10, -21, -10, -22, 9, -23, 9, -20, 15, -16, 15, -11, 10, -10, 10, -13, 5, -8, 5, -8, 13, -4, 15, -2, 15, -2, 5, 3, 5, 5, 18, 8, 18, 9, 4, 13, 4, 14, 18, 24, 18, 27, 12, 28, 12, 27, -7, 27, -10, 20, -14, 20, -22, 9, -22)
+hitbox_polygons = Array[PackedVector2Array]([PackedVector2Array(9, -21, -5, -15, -7, -15, -8, -4, -8, -1, -12, -1, -10, -4, -10, -6, -15, -10, -21, -10, -22, 9, -23, 9, -20, 15, -16, 15, -11, 10, -10, 10, -13, 5, -8, 5, -8, 13, -4, 15, -2, 15, -2, 5, 3, 5, 5, 18, 8, 18, 9, 4, 13, 4, 14, 18, 24, 18, 27, 12, 28, 12, 27, -7, 27, -10, 20, -14, 20, -22, 9, -22)])
+
+[node name="ScratchProject" type="Control" unique_id=1132540942]
+layout_mode = 3
+anchors_preset = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_7a228")
+
+[node name="Background" type="ColorRect" parent="." unique_id=1235652494]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0, 0, 0, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1233110285]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_constants/separation = 0
+
+[node name="Taskbar" type="PanelContainer" parent="VBoxContainer" unique_id=1682374231]
+layout_mode = 2
+
+[node name="Controls" type="HBoxContainer" parent="VBoxContainer/Taskbar" unique_id=527188701]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="GreenFlagButton" type="Button" parent="VBoxContainer/Taskbar/Controls" unique_id=681454730]
+layout_mode = 2
+text = "Flag"
+
+[node name="StopButton" type="Button" parent="VBoxContainer/Taskbar/Controls" unique_id=1264820561]
+layout_mode = 2
+text = "Stop"
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="VBoxContainer" unique_id=1333614164]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+ratio = 1.3333334
+
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer/AspectRatioContainer" unique_id=717432463]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ViewportContainer" type="SubViewportContainer" parent="VBoxContainer/AspectRatioContainer/ColorRect" unique_id=41955977]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="VBoxContainer/AspectRatioContainer/ColorRect/ViewportContainer" unique_id=1070303696]
+transparent_bg = true
+physics_object_picking = true
+size = Vector2i(480, 360)
+size_2d_override = Vector2i(480, 360)
+size_2d_override_stretch = true
+
+[node name="Camera2D" type="Camera2D" parent="VBoxContainer/AspectRatioContainer/ColorRect/ViewportContainer/SubViewport" unique_id=112437307]
+
+[node name="Stage" type="Node2D" parent="VBoxContainer/AspectRatioContainer/ColorRect/ViewportContainer/SubViewport" unique_id=1284525630 instance=ExtResource("2_pmknc")]
+script = ExtResource("3_vq64n")
+costumes = Array[ExtResource("4_pylvl")]([SubResource("Resource_3vtcd")])
+sounds = Array[ExtResource("6_yc7lu")]([SubResource("Resource_t74fb")])
+
+[node name="bubble" type="Node2D" parent="VBoxContainer/AspectRatioContainer/ColorRect/ViewportContainer/SubViewport" unique_id=115117025 instance=ExtResource("7_gtrha")]
+position = Vector2(-42.301357, -131.91516)
+script = ExtResource("8_pvrtq")
+costumes = Array[ExtResource("4_pylvl")]([SubResource("Resource_ooplx")])
+scratch_size = 1.19
+
+[node name="bubble4" type="Node2D" parent="VBoxContainer/AspectRatioContainer/ColorRect/ViewportContainer/SubViewport" unique_id=1738980673 instance=ExtResource("10_eg1rp")]
+position = Vector2(-13.272439, -134.30096)
+script = ExtResource("11_7vo6k")
+costumes = Array[ExtResource("4_pylvl")]([SubResource("Resource_tnuut")])
+scratch_size = 1.12
+
+[node name="bubble3" type="Node2D" parent="VBoxContainer/AspectRatioContainer/ColorRect/ViewportContainer/SubViewport" unique_id=224799870 instance=ExtResource("13_e2rft")]
+position = Vector2(-117.69635, -117.6206)
+script = ExtResource("14_b7s24")
+costumes = Array[ExtResource("4_pylvl")]([SubResource("Resource_1gp04")])
+scratch_size = 1.22
+
+[node name="bubble2" type="Node2D" parent="VBoxContainer/AspectRatioContainer/ColorRect/ViewportContainer/SubViewport" unique_id=298583422 instance=ExtResource("16_rqxb1")]
+position = Vector2(-165.46683, -182)
+script = ExtResource("17_wcron")
+costumes = Array[ExtResource("4_pylvl")]([SubResource("Resource_s67iu")])
+scratch_visible = false
+scratch_size = 1.5000000000000002
+
+[node name="fish3" type="Node2D" parent="VBoxContainer/AspectRatioContainer/ColorRect/ViewportContainer/SubViewport" unique_id=691981002 instance=ExtResource("19_0iugl")]
+position = Vector2(-125.26336, 0.89149594)
+script = ExtResource("20_7hgvh")
+costumes = Array[ExtResource("4_pylvl")]([SubResource("Resource_iefb7")])
+direction = -48.43598770115369
+rotation_style = 1
+
+[node name="fish2" type="Node2D" parent="VBoxContainer/AspectRatioContainer/ColorRect/ViewportContainer/SubViewport" unique_id=517880712 instance=ExtResource("22_gsab0")]
+position = Vector2(-88.9375, -22.321438)
+script = ExtResource("23_d7hjk")
+costumes = Array[ExtResource("4_pylvl")]([SubResource("Resource_rjaei")])
+direction = -41.25498851203329
+rotation_style = 1
+
+[node name="fish1" type="Node2D" parent="VBoxContainer/AspectRatioContainer/ColorRect/ViewportContainer/SubViewport" unique_id=1230415712 instance=ExtResource("25_1n2l7")]
+position = Vector2(-67.2498, -92.31046)
+script = ExtResource("26_ic0w2")
+costumes = Array[ExtResource("4_pylvl")]([SubResource("Resource_xjfc4")])
+direction = -93.6802453945171
+rotation_style = 1
+
+[node name="fish4" type="Node2D" parent="VBoxContainer/AspectRatioContainer/ColorRect/ViewportContainer/SubViewport" unique_id=107810372 instance=ExtResource("28_hib8g")]
+position = Vector2(18.657022, -49.69733)
+script = ExtResource("29_7o43h")
+costumes = Array[ExtResource("4_pylvl")]([SubResource("Resource_mbf0o")])
+sounds = Array[ExtResource("6_yc7lu")]([SubResource("Resource_bxhin")])
+direction = 122.83357800021976
+rotation_style = 1
+
+[node name="position" type="Node2D" parent="VBoxContainer/AspectRatioContainer/ColorRect/ViewportContainer/SubViewport" unique_id=1970549651 instance=ExtResource("31_0wt6q")]
+position = Vector2(-56, 164)
+script = ExtResource("32_7m6pl")
+costumes = Array[ExtResource("4_pylvl")]([SubResource("Resource_0kjlq")])
+sounds = Array[ExtResource("6_yc7lu")]([SubResource("Resource_npjc3")])
+scratch_visible = false
+
+[node name="dead" type="Node2D" parent="VBoxContainer/AspectRatioContainer/ColorRect/ViewportContainer/SubViewport" unique_id=2130721453 instance=ExtResource("34_eq0hp")]
+position = Vector2(-133, 45)
+script = ExtResource("35_ss7jc")
+costumes = Array[ExtResource("4_pylvl")]([SubResource("Resource_4u3i5")])
+direction = 108.0

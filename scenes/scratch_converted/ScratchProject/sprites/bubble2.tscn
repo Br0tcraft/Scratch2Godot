@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://by6vseg0h16p4"]
+
+[ext_resource type="Script" path="res://scenes/scratch_converted/ScratchProject/sprites/bubble2.gd" id="1_owocd"]
+[ext_resource type="Script" uid="uid://bm4lvudded1ny" path="res://addons/scratch_converter/core/runtime/scratch_costume.gd" id="2_b2idl"]
+[ext_resource type="Texture2D" uid="uid://djbytosab0w7k" path="res://scenes/scratch_converted/ScratchProject/sprites/assets/bubble2/d5437f6269ed9e838010994c7c514b88_tex.res" id="3_pktqc"]
+
+[sub_resource type="Resource" id="Resource_s67iu"]
+script = ExtResource("2_b2idl")
+name = "bubble"
+texture = ExtResource("3_pktqc")
+rotation_center = Vector2(11.9375, 11.8125)
+hitbox_polygon = PackedVector2Array(-4.9375, -10.8125, -10.9375, -4.8125, -11.9375, -4.8125, -11.9375, 5.1875, -7.9375, 9.1875, -7.9375, 10.1875, -3.9375, 12.1875, 4.0625, 12.1875, 11.0625, 4.1875, 12.0625, 4.1875, 12.0625, -3.8125, 8.0625, -8.8125, 8.0625, -9.8125, -4.9375, -11.8125)
+hitbox_polygons = Array[PackedVector2Array]([PackedVector2Array(-4.9375, -10.8125, -10.9375, -4.8125, -11.9375, -4.8125, -11.9375, 5.1875, -7.9375, 9.1875, -7.9375, 10.1875, -3.9375, 12.1875, 4.0625, 12.1875, 11.0625, 4.1875, 12.0625, 4.1875, 12.0625, -3.8125, 8.0625, -8.8125, 8.0625, -9.8125, -4.9375, -11.8125)])
+
+[node name="bubble2" type="Node2D" unique_id=298583422]
+position = Vector2(-165.46683, -182)
+script = ExtResource("1_owocd")
+costumes = Array[ExtResource("2_b2idl")]([SubResource("Resource_s67iu")])
+scratch_visible = false
+scratch_size = 1.5000000000000002
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=697219097]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=193784488]

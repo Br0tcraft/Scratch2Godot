@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://imyh374wt6d8"]
+
+[ext_resource type="Script" path="res://scenes/scratch_converted/ScratchProject/sprites/position.gd" id="1_msc4x"]
+[ext_resource type="Script" uid="uid://bm4lvudded1ny" path="res://addons/scratch_converter/core/runtime/scratch_costume.gd" id="2_v0l4l"]
+[ext_resource type="Texture2D" uid="uid://b4ktlsurvnw1h" path="res://scenes/scratch_converted/ScratchProject/sprites/assets/position/856303c0979d7b5863b41838d8324c92_tex.res" id="3_32qe6"]
+[ext_resource type="Script" uid="uid://dd4ii53185ux2" path="res://addons/scratch_converter/core/runtime/scratch_sound.gd" id="4_8dliu"]
+
+[sub_resource type="Resource" id="Resource_0kjlq"]
+script = ExtResource("2_v0l4l")
+name = "costume1"
+texture = ExtResource("3_32qe6")
+rotation_center = Vector2(10, 9)
+hitbox_polygon = PackedVector2Array()
+
+[sub_resource type="Resource" id="Resource_npjc3"]
+script = ExtResource("4_8dliu")
+name = "pop"
+
+[node name="position" type="Node2D" unique_id=1970549651]
+position = Vector2(-56, 164)
+script = ExtResource("1_msc4x")
+costumes = Array[ExtResource("2_v0l4l")]([SubResource("Resource_0kjlq")])
+sounds = Array[ExtResource("4_8dliu")]([SubResource("Resource_npjc3")])
+scratch_visible = false
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=813399828]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=2012640297]

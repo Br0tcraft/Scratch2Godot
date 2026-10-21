@@ -1,0 +1,108 @@
+[gd_scene format=3 uid="uid://hfdktb2g5icy"]
+
+[ext_resource type="PackedScene" uid="uid://ccp5f8l0ctlag" path="res://addons/scratch_converter/core/runtime/monitor/list.tscn" id="1_avcxa"]
+[ext_resource type="PackedScene" uid="uid://dsvnkf2p8anpw" path="res://addons/scratch_converter/core/runtime/monitor/variable.tscn" id="1_ox722"]
+
+[node name="ScratchUI" type="Control" unique_id=1632755973]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 350.0
+offset_bottom = 500.0
+
+[node name="VariableMonitor" parent="." unique_id=436112878 instance=ExtResource("1_ox722")]
+layout_mode = 1
+offset_left = 5.0
+offset_top = 95.0
+offset_right = 5.0
+offset_bottom = 95.0
+variable_name = "Normal Var"
+slider_min = 0.0
+variable_value = 50.0
+
+[node name="NormalLabel" parent="VariableMonitor/Normal/HBoxContainer" parent_id_path=PackedInt32Array(436112878, 1751321298) index="0" unique_id=376186972]
+text = "Normal Var"
+
+[node name="Slider" parent="VariableMonitor" index="2" unique_id=1199474740]
+offset_left = 4.0
+offset_top = 27.0
+offset_right = 169.0
+offset_bottom = 86.0
+
+[node name="SliderLabel" parent="VariableMonitor/Slider/SliderContent/SliderHeader" parent_id_path=PackedInt32Array(436112878, 1424094689) index="0" unique_id=1147475915]
+text = "Normal Var"
+
+[node name="ScratchSlider" parent="VariableMonitor/Slider/SliderContent" parent_id_path=PackedInt32Array(436112878, 1757292988) index="1" unique_id=1646414185]
+min_value = 0.0
+
+[node name="VariableMonitor2" parent="." unique_id=1184979194 instance=ExtResource("1_ox722")]
+layout_mode = 1
+offset_left = 6.0
+offset_top = 143.0
+offset_right = 6.0
+offset_bottom = 143.0
+variable_name = "Slider Var"
+
+[node name="NormalLabel" parent="VariableMonitor2/Normal/HBoxContainer" parent_id_path=PackedInt32Array(1184979194, 1751321298) index="0" unique_id=376186972]
+text = "Slider Var"
+
+[node name="Slider" parent="VariableMonitor2" index="2" unique_id=1199474740]
+offset_left = 263.0
+offset_top = -50.0
+offset_right = 428.0
+offset_bottom = 9.0
+
+[node name="SliderLabel" parent="VariableMonitor2/Slider/SliderContent/SliderHeader" parent_id_path=PackedInt32Array(1184979194, 1424094689) index="0" unique_id=1147475915]
+text = "Slider Var"
+
+[node name="VariableMonitor3" parent="." unique_id=834951873 instance=ExtResource("1_ox722")]
+layout_mode = 1
+offset_left = 6.0
+offset_top = 54.0
+offset_right = 6.0
+offset_bottom = 54.0
+mode = 1
+variable_name = "my variable large"
+variable_value = "Large"
+
+[node name="NormalValue" parent="VariableMonitor3/Normal/HBoxContainer/VariableValueWrapper" parent_id_path=PackedInt32Array(834951873, 75843181) index="0" unique_id=314578426]
+text = "Large"
+
+[node name="Large" parent="VariableMonitor3" index="1" unique_id=946445282]
+visible = true
+
+[node name="LargeValue" parent="VariableMonitor3/Large" index="0" unique_id=2095949485]
+text = "Large"
+
+[node name="Slider" parent="VariableMonitor3" index="2" unique_id=1199474740]
+visible = false
+
+[node name="SliderValue" parent="VariableMonitor3/Slider/SliderContent/SliderHeader/SliderValueWrapper" parent_id_path=PackedInt32Array(834951873, 148865869) index="0" unique_id=966601008]
+text = "Large"
+
+[node name="ListMonitor" parent="." unique_id=2081713400 instance=ExtResource("1_avcxa")]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 221.0
+offset_right = 269.0
+offset_bottom = 399.0
+list_name = "Normal List"
+default_values = Array[String](["Element 1", "Element 2 That is to long ............", "small"])
+
+[node name="ListTitle" parent="ListMonitor/ListBoxContent/ListHeader" parent_id_path=PackedInt32Array(2081713400, 265704163) index="0" unique_id=700499817]
+text = "Normal List"
+
+[node name="FooterLength" parent="ListMonitor/ListBoxContent/ListFooter/FooterContent" parent_id_path=PackedInt32Array(2081713400, 425364867) index="1" unique_id=90018089]
+text = "length 3"
+
+[node name="Label" type="Label" parent="." unique_id=1022595995]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 13.0
+offset_right = 57.0
+offset_bottom = 36.0
+text = "Godot:"
+
+[editable path="VariableMonitor"]
+[editable path="VariableMonitor2"]
+[editable path="VariableMonitor3"]
+[editable path="ListMonitor"]

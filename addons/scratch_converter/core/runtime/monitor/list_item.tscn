@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://8eqo0ry2j1qo"]
+
+[ext_resource type="Script" uid="uid://biiwwwjqmurbk" path="res://addons/scratch_converter/core/runtime/monitor/list_item.gd" id="1_01tyd"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_list_item"]
+content_margin_left = 6.0
+content_margin_top = 2.0
+content_margin_right = 6.0
+content_margin_bottom = 2.0
+bg_color = Color(1, 0.4, 0.101960786, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="Item" type="HBoxContainer" unique_id=1607615585]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 27.0
+grow_horizontal = 2
+theme_override_constants/separation = 0
+script = ExtResource("1_01tyd")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=422378190]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_right = 5
+
+[node name="Index" type="Label" parent="MarginContainer" unique_id=807142060]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.4117647, 0.44705883, 0.53333336, 1)
+theme_override_font_sizes/font_size = 14
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ItemWrapper" type="PanelContainer" parent="." unique_id=647034320]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_list_item")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="ItemWrapper" unique_id=1133759422]
+layout_mode = 2
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 0
+
+[node name="ItemText" type="Label" parent="ItemWrapper/ScrollContainer" unique_id=77850081]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 16
+autowrap_trim_flags = 0
+clip_text = true
+text_overrun_behavior = 5

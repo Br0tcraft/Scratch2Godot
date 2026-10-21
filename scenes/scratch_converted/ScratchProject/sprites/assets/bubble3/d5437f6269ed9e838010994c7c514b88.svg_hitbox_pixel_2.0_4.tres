@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="HitboxResource" format=3 uid="uid://db1w8auy5o1k1"]
+
+[ext_resource type="Script" uid="uid://cxcsfiu66w4bh" path="res://addons/scratch_converter/core/runtime/scratch_hitbox.gd" id="1_0i44s"]
+
+[resource]
+script = ExtResource("1_0i44s")
+polygon = PackedVector2Array(-4.9375, -10.8125, -10.9375, -4.8125, -11.9375, -4.8125, -11.9375, 5.1875, -7.9375, 9.1875, -7.9375, 10.1875, -3.9375, 12.1875, 4.0625, 12.1875, 11.0625, 4.1875, 12.0625, 4.1875, 12.0625, -3.8125, 8.0625, -8.8125, 8.0625, -9.8125, -4.9375, -11.8125)
+polygons = Array[PackedVector2Array]([PackedVector2Array(-4.9375, -10.8125, -10.9375, -4.8125, -11.9375, -4.8125, -11.9375, 5.1875, -7.9375, 9.1875, -7.9375, 10.1875, -3.9375, 12.1875, 4.0625, 12.1875, 11.0625, 4.1875, 12.0625, 4.1875, 12.0625, -3.8125, 8.0625, -8.8125, 8.0625, -9.8125, -4.9375, -11.8125)])

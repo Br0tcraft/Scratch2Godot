@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://dks472066g42t"]
+
+[ext_resource type="Script" uid="uid://wem670q34bcl" path="res://addons/scratch_converter/core/runtime/scratch_sprite.gd" id="1_joc8f"]
+
+[node name="sprite_template" type="Node2D" unique_id=453854516]
+script = ExtResource("1_joc8f")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1914837697]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=723662831]

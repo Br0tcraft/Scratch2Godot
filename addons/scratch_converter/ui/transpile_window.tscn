@@ -1,0 +1,544 @@
+[gd_scene format=3 uid="uid://b1hmnx3yjakgn"]
+
+[ext_resource type="Script" uid="uid://cbnd1nt3d7nvw" path="res://addons/scratch_converter/ui/transpile_window.gd" id="1_mvd1f"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mvd1f"]
+bg_color = Color(0.25882354, 0.25882354, 0.25882354, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+expand_margin_left = 6.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nqtx2"]
+bg_color = Color(0.25882354, 0.25882354, 0.25882354, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+expand_margin_left = 7.0
+
+[node name="Window" type="Window" unique_id=1873291448]
+disable_3d = true
+oversampling_override = 1.0
+title = "Import Settings"
+position = Vector2i(0, 36)
+size = Vector2i(600, 500)
+min_size = Vector2i(100, 100)
+keep_title_visible = true
+script = ExtResource("1_mvd1f")
+
+[node name="OPEN_PROJECT" type="FileDialog" parent="." unique_id=116314659]
+unique_name_in_owner = true
+title = "Open a File"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.sb3")
+use_native_dialog = true
+
+[node name="IMPORT_SETTINGS" type="FileDialog" parent="." unique_id=1921664243]
+unique_name_in_owner = true
+title = "Open a File"
+file_mode = 0
+filters = PackedStringArray("*.tres")
+
+[node name="EXPORT_SETTINGS" type="FileDialog" parent="." unique_id=2067324615]
+unique_name_in_owner = true
+title = "Export Settings"
+filters = PackedStringArray("*.tres")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1803756387]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.16078432, 0.16078432, 0.16078432, 1)
+
+[node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=866732817]
+clip_contents = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer" unique_id=1978103455]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 11
+theme_override_constants/margin_top = 11
+theme_override_constants/margin_right = 11
+theme_override_constants/margin_bottom = 11
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/MarginContainer" unique_id=2143621732]
+layout_mode = 2
+
+[node name="Select" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer" unique_id=83554304]
+layout_mode = 2
+theme_override_font_sizes/font_size = 21
+text = "Select Project"
+clip_text = true
+text_overrun_behavior = 2
+
+[node name="Credit" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer" unique_id=1450194140]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Select the project you want to transpile by uploading it. If you use a project you didn't make, make sure to credit the creator."
+autowrap_mode = 2
+
+[node name="FILE" type="Button" parent="ScrollContainer/MarginContainer/VBoxContainer" unique_id=1745180990]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Upload File"
+text_overrun_behavior = 2
+clip_text = true
+
+[node name="OPTIONS" type="VBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer" unique_id=119517333]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS" unique_id=1285886280]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 21
+text = "Name"
+autowrap_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS" unique_id=1561671132]
+layout_mode = 2
+theme_override_constants/margin_left = 6
+
+[node name="NAME" type="LineEdit" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/MarginContainer" unique_id=1593692183]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_mvd1f")
+placeholder_text = "YourProjectName"
+
+[node name="RuntimeOptions" type="FoldableContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS" unique_id=932982548]
+layout_mode = 2
+theme_override_font_sizes/font_size = 21
+title = "Runtime Options"
+
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/RuntimeOptions" unique_id=1555638511]
+layout_mode = 2
+theme_override_constants/margin_left = 11
+theme_override_constants/margin_top = 11
+theme_override_constants/margin_right = 11
+theme_override_constants/margin_bottom = 11
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/RuntimeOptions/MarginContainer" unique_id=27473787]
+layout_mode = 2
+
+[node name="CLONES" type="CheckBox" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/RuntimeOptions/MarginContainer/VBoxContainer" unique_id=1835895340]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Infinite Clones"
+text_overrun_behavior = 2
+autowrap_mode = 2
+clip_text = true
+
+[node name="CLOSE" type="CheckBox" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/RuntimeOptions/MarginContainer/VBoxContainer" unique_id=1801921444]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Close window when project stops"
+text_overrun_behavior = 2
+autowrap_mode = 3
+clip_text = true
+
+[node name="START" type="CheckBox" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/RuntimeOptions/MarginContainer/VBoxContainer" unique_id=1191132931]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Start project automatically"
+text_overrun_behavior = 2
+autowrap_mode = 3
+clip_text = true
+
+[node name="VBoxContainer" type="FlowContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/RuntimeOptions/MarginContainer/VBoxContainer" unique_id=1966494695]
+layout_mode = 2
+
+[node name="Size" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/RuntimeOptions/MarginContainer/VBoxContainer/VBoxContainer" unique_id=1173673748]
+layout_mode = 2
+text = "Custom Stage Size"
+clip_text = true
+text_overrun_behavior = 2
+
+[node name="SIZE_X" type="SpinBox" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/RuntimeOptions/MarginContainer/VBoxContainer/VBoxContainer" unique_id=1034640751]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 1.0
+max_value = 4096.0
+value = 480.0
+rounded = true
+custom_arrow_step = 1.0
+custom_arrow_round = true
+select_all_on_focus = true
+
+[node name="x" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/RuntimeOptions/MarginContainer/VBoxContainer/VBoxContainer" unique_id=666282929]
+layout_mode = 2
+text = "x"
+
+[node name="SIZE_Y" type="SpinBox" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/RuntimeOptions/MarginContainer/VBoxContainer/VBoxContainer" unique_id=1931870854]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/buttons_vertical_separation = 0
+min_value = 1.0
+max_value = 4096.0
+value = 360.0
+rounded = true
+custom_arrow_step = 1.0
+custom_arrow_round = true
+select_all_on_focus = true
+
+[node name="SCREEN" type="OptionButton" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/RuntimeOptions/MarginContainer/VBoxContainer" unique_id=1068575022]
+unique_name_in_owner = true
+layout_mode = 2
+text_overrun_behavior = 2
+clip_text = true
+selected = 0
+item_count = 3
+popup/item_0/text = "Preserve aspect ratio when resized (recommended)"
+popup/item_0/id = 0
+popup/item_1/text = "Stretch stage to fill screen without changing actual size"
+popup/item_1/id = 1
+popup/item_2/text = "Dynamically resize size to match window size (experimental)"
+popup/item_2/id = 2
+
+[node name="PlayerOptions" type="FoldableContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS" unique_id=473656686]
+layout_mode = 2
+theme_override_font_sizes/font_size = 21
+title = "Player Options"
+
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/PlayerOptions" unique_id=1286065916]
+layout_mode = 2
+theme_override_constants/margin_left = 11
+theme_override_constants/margin_top = 11
+theme_override_constants/margin_right = 11
+theme_override_constants/margin_bottom = 11
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/PlayerOptions/MarginContainer" unique_id=1485884427]
+layout_mode = 2
+
+[node name="FLAG" type="CheckBox" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/PlayerOptions/MarginContainer/VBoxContainer" unique_id=1617186402]
+unique_name_in_owner = true
+layout_mode = 2
+button_pressed = true
+text = "Show green flag button in controls"
+text_overrun_behavior = 2
+
+[node name="STOP" type="CheckBox" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/PlayerOptions/MarginContainer/VBoxContainer" unique_id=605214284]
+unique_name_in_owner = true
+layout_mode = 2
+button_pressed = true
+text = "Show stop flag button in controls"
+text_overrun_behavior = 2
+
+[node name="Background color" type="HBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/PlayerOptions/MarginContainer/VBoxContainer" unique_id=329065921]
+layout_mode = 2
+
+[node name="BACKGROUND" type="ColorPickerButton" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/PlayerOptions/MarginContainer/VBoxContainer/Background color" unique_id=1115979863]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(45, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="Background color" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/PlayerOptions/MarginContainer/VBoxContainer/Background color" unique_id=200810445]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Background color"
+text_overrun_behavior = 2
+
+[node name="Accent color" type="HBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/PlayerOptions/MarginContainer/VBoxContainer" unique_id=1490151757]
+layout_mode = 2
+
+[node name="ACCENT" type="ColorPickerButton" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/PlayerOptions/MarginContainer/VBoxContainer/Accent color" unique_id=403334283]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(45, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+color = Color(1, 0.3, 0.3, 1)
+
+[node name="Accent color" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/PlayerOptions/MarginContainer/VBoxContainer/Accent color" unique_id=2005263841]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Accent color"
+text_overrun_behavior = 2
+
+[node name="Variable" type="HBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/PlayerOptions/MarginContainer/VBoxContainer" unique_id=1056548613]
+layout_mode = 2
+
+[node name="VARIABLE" type="ColorPickerButton" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/PlayerOptions/MarginContainer/VBoxContainer/Variable" unique_id=302473684]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(45, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+color = Color(1, 0.5, 0.1, 1)
+
+[node name="Variable color" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/PlayerOptions/MarginContainer/VBoxContainer/Variable" unique_id=1610343418]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Variable color"
+text_overrun_behavior = 2
+
+[node name="List" type="HBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/PlayerOptions/MarginContainer/VBoxContainer" unique_id=1478765133]
+layout_mode = 2
+
+[node name="LIST" type="ColorPickerButton" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/PlayerOptions/MarginContainer/VBoxContainer/List" unique_id=1118100849]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(45, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+color = Color(1, 0.4, 1, 0.2)
+
+[node name="List color" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/PlayerOptions/MarginContainer/VBoxContainer/List" unique_id=1935680529]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "List color"
+text_overrun_behavior = 2
+
+[node name="EDITABLE" type="CheckBox" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/PlayerOptions/MarginContainer/VBoxContainer" unique_id=310213855]
+unique_name_in_owner = true
+layout_mode = 2
+button_pressed = true
+text = "Editable lists"
+text_overrun_behavior = 2
+
+[node name="Cloud Variables" type="FoldableContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS" unique_id=1764964530]
+layout_mode = 2
+theme_override_font_sizes/font_size = 21
+title = "Cloud Variables"
+
+[node name="MarginContainer-Cloud" type="MarginContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/Cloud Variables" unique_id=1902075915]
+layout_mode = 2
+theme_override_constants/margin_left = 11
+theme_override_constants/margin_top = 11
+theme_override_constants/margin_right = 11
+theme_override_constants/margin_bottom = 11
+
+[node name="VBoxContainer-Cloud" type="VBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/Cloud Variables/MarginContainer-Cloud" unique_id=467856763]
+layout_mode = 2
+
+[node name="MarginContainer-Cloud" type="MarginContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/Cloud Variables/MarginContainer-Cloud/VBoxContainer-Cloud" unique_id=788885111]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+
+[node name="Cloude" type="VBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/Cloud Variables/MarginContainer-Cloud/VBoxContainer-Cloud/MarginContainer-Cloud" unique_id=1401529837]
+layout_mode = 2
+
+[node name="FlowContainer-Modes" type="HFlowContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/Cloud Variables/MarginContainer-Cloud/VBoxContainer-Cloud/MarginContainer-Cloud/Cloude" unique_id=629804439]
+layout_mode = 2
+
+[node name="Mode" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/Cloud Variables/MarginContainer-Cloud/VBoxContainer-Cloud/MarginContainer-Cloud/Cloude/FlowContainer-Modes" unique_id=1941682438]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "Mode"
+text_overrun_behavior = 2
+
+[node name="CLOUD_MODE" type="OptionButton" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/Cloud Variables/MarginContainer-Cloud/VBoxContainer-Cloud/MarginContainer-Cloud/Cloude/FlowContainer-Modes" unique_id=114349172]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text_overrun_behavior = 2
+selected = 0
+item_count = 4
+popup/item_0/text = "Connect to cloud variable server"
+popup/item_0/id = 0
+popup/item_1/text = "Store in local storage"
+popup/item_1/id = 1
+popup/item_2/text = "Ignore"
+popup/item_2/id = 2
+popup/item_3/text = "Advanced"
+popup/item_3/id = 3
+
+[node name="ADVANCED" type="VBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/Cloud Variables/MarginContainer-Cloud/VBoxContainer-Cloud/MarginContainer-Cloud/Cloude" unique_id=51889685]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="FlowContainer-Host" type="HFlowContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/Cloud Variables/MarginContainer-Cloud/VBoxContainer-Cloud/MarginContainer-Cloud/Cloude" unique_id=904981520]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/Cloud Variables/MarginContainer-Cloud/VBoxContainer-Cloud/MarginContainer-Cloud/Cloude/FlowContainer-Host" unique_id=130797903]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Cloud host"
+text_overrun_behavior = 2
+
+[node name="HOST" type="LineEdit" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/Cloud Variables/MarginContainer-Cloud/VBoxContainer-Cloud/MarginContainer-Cloud/Cloude/FlowContainer-Host" unique_id=1592462700]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_nqtx2")
+text = "wss://clouddata.turbowarp.org"
+placeholder_text = "wss://clouddata.turbowarp.org"
+emoji_menu_enabled = false
+
+[node name="FlowContainer-ID" type="HFlowContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/Cloud Variables/MarginContainer-Cloud/VBoxContainer-Cloud/MarginContainer-Cloud/Cloude" unique_id=811888965]
+layout_mode = 2
+
+[node name="ProjectID" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/Cloud Variables/MarginContainer-Cloud/VBoxContainer-Cloud/MarginContainer-Cloud/Cloude/FlowContainer-ID" unique_id=353692914]
+visible = false
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Project ID"
+text_overrun_behavior = 2
+
+[node name="ID" type="LineEdit" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/Cloud Variables/MarginContainer-Cloud/VBoxContainer-Cloud/MarginContainer-Cloud/Cloude/FlowContainer-ID" unique_id=613258440]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "wss://clouddata.turbowarp.org"
+emoji_menu_enabled = false
+
+[node name="isUsedFor" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/Cloud Variables/MarginContainer-Cloud/VBoxContainer-Cloud/MarginContainer-Cloud/Cloude" unique_id=451873759]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_constants/line_spacing = 8
+text = "Project ID is used when connecting to a cloud variable server."
+autowrap_mode = 2
+
+[node name="Definitions" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/Cloud Variables/MarginContainer-Cloud/VBoxContainer-Cloud" unique_id=911606523]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_constants/line_spacing = 8
+text = "
+\"Connect to cloud variable server\" syncs variables with other users.
+\"Store in local storage\" stores variables on each user's computer and restores them when the project is opened. If a user has multiple windows/tabs of the project open, changes will sync between those windows.
+\"Ignore\" treats cloud variables like normal variables.
+\"Advanced\" uses a different mode for each variable, so some variables can sync with other users but others can be stored locally, for example."
+autowrap_mode = 2
+
+[node name="BuildAndConversion" type="FoldableContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS" unique_id=695673208]
+layout_mode = 2
+theme_override_font_sizes/font_size = 21
+title = "Build & Conversion"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/BuildAndConversion" unique_id=458163082]
+layout_mode = 2
+
+[node name="Output" type="HFlowContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/BuildAndConversion/VBoxContainer" unique_id=169728612]
+layout_mode = 2
+
+[node name="Output-Title" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/BuildAndConversion/VBoxContainer/Output" unique_id=761082981]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Output path"
+text_overrun_behavior = 2
+
+[node name="OUTPUT_PATH" type="LineEdit" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/BuildAndConversion/VBoxContainer/Output" unique_id=1155870687]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_nqtx2")
+text = "res://scenes/scratch_converted/"
+placeholder_text = "res://scenes/scratch_converted/"
+emoji_menu_enabled = false
+
+[node name="DELETE" type="CheckBox" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/BuildAndConversion/VBoxContainer" unique_id=1528075064]
+unique_name_in_owner = true
+layout_mode = 2
+button_pressed = true
+text = "delete temporary folders after conversion"
+text_overrun_behavior = 2
+autowrap_mode = 2
+clip_text = true
+
+[node name="FlowContainer-logLevel" type="HFlowContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/BuildAndConversion/VBoxContainer" unique_id=774352345]
+layout_mode = 2
+
+[node name="log level" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/BuildAndConversion/VBoxContainer/FlowContainer-logLevel" unique_id=1501021242]
+custom_minimum_size = Vector2(76.635, 0)
+layout_mode = 2
+text = "Log level"
+text_overrun_behavior = 2
+
+[node name="LOG_LEVEL" type="OptionButton" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/BuildAndConversion/VBoxContainer/FlowContainer-logLevel" unique_id=1964552656]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text_overrun_behavior = 2
+selected = 0
+item_count = 3
+popup/item_0/text = "SILENT"
+popup/item_0/id = 0
+popup/item_1/text = "WARN"
+popup/item_1/id = 1
+popup/item_2/text = "VERBOSE"
+popup/item_2/id = 2
+
+[node name="LOG" type="CheckBox" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/BuildAndConversion/VBoxContainer" unique_id=1823060292]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Log conversion process"
+text_overrun_behavior = 2
+autowrap_mode = 2
+clip_text = true
+
+[node name="CONTINUE" type="CheckBox" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/BuildAndConversion/VBoxContainer" unique_id=1678921196]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Continue on error"
+text_overrun_behavior = 2
+autowrap_mode = 2
+clip_text = true
+
+[node name="OVERWRITE" type="CheckBox" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/BuildAndConversion/VBoxContainer" unique_id=939678687]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Overwrite existing scenes"
+text_overrun_behavior = 2
+autowrap_mode = 2
+clip_text = true
+
+[node name="HBoxContainer-Buttons" type="HFlowContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS" unique_id=2001019283]
+layout_mode = 2
+size_flags_vertical = 3
+last_wrap_alignment = 2
+
+[node name="EXPORT" type="Button" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/HBoxContainer-Buttons" unique_id=436644579]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+theme_override_font_sizes/font_size = 21
+text = "Export Settings"
+text_overrun_behavior = 2
+
+[node name="IMPORT" type="Button" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/HBoxContainer-Buttons" unique_id=89384683]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+theme_override_font_sizes/font_size = 21
+text = "Import Settings"
+text_overrun_behavior = 2
+
+[node name="RESET" type="Button" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS/HBoxContainer-Buttons" unique_id=811237407]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 21
+text = "Reset All Settings"
+text_overrun_behavior = 2
+
+[node name="TRANSPILE" type="Button" parent="ScrollContainer/MarginContainer/VBoxContainer/OPTIONS" unique_id=143411265]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 30
+text = "Transpile"
+text_overrun_behavior = 2

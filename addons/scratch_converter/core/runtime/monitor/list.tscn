@@ -1,0 +1,108 @@
+[gd_scene format=3 uid="uid://ccp5f8l0ctlag"]
+
+[ext_resource type="Script" uid="uid://dgs0p54jg5svg" path="res://addons/scratch_converter/core/runtime/monitor/list.gd" id="1_h2lhu"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_list_bg"]
+bg_color = Color(0.9019608, 0.94509804, 1, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.75, 0.82, 0.88, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_list_header"]
+content_margin_top = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_list_footer"]
+content_margin_left = 8.0
+content_margin_top = 4.0
+content_margin_right = 8.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 1)
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="ListMonitor" type="PanelContainer" unique_id=2081713400]
+custom_minimum_size = Vector2(150, 100)
+propagate_maximum_size = false
+offset_right = 150.0
+offset_bottom = 205.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_list_bg")
+script = ExtResource("1_h2lhu")
+default_values = Array[String](["sssssssssssssssssssssssssssssssssssssssssssssss", ""])
+
+[node name="ListBoxContent" type="VBoxContainer" parent="." unique_id=2032553639]
+propagate_maximum_size = false
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="ListHeader" type="PanelContainer" parent="ListBoxContent" unique_id=265704163]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_list_header")
+
+[node name="ListTitle" type="Label" parent="ListBoxContent/ListHeader" unique_id=700499817]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.34, 0.37, 0.46, 1)
+theme_override_font_sizes/font_size = 16
+text = "List Name"
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="ListBoxContent" unique_id=512675977]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+scroll_hint_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="ListBoxContent/ScrollContainer" unique_id=1639190876]
+propagate_maximum_size = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 5
+
+[node name="ListItems" type="VBoxContainer" parent="ListBoxContent/ScrollContainer/MarginContainer" unique_id=83717471]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
+
+[node name="ListFooter" type="PanelContainer" parent="ListBoxContent" unique_id=1286111525]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_list_footer")
+
+[node name="FooterContent" type="HBoxContainer" parent="ListBoxContent/ListFooter" unique_id=425364867]
+layout_mode = 2
+
+[node name="FooterPlus" type="Label" parent="ListBoxContent/ListFooter/FooterContent" unique_id=1822799935]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.34, 0.37, 0.46, 1)
+theme_override_font_sizes/font_size = 16
+text = "+"
+
+[node name="FooterLength" type="Label" parent="ListBoxContent/ListFooter/FooterContent" unique_id=90018089]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.34, 0.37, 0.46, 1)
+theme_override_font_sizes/font_size = 16
+text = "length: 2"
+horizontal_alignment = 1
+
+[node name="FooterEquals" type="Label" parent="ListBoxContent/ListFooter/FooterContent" unique_id=324153338]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.34, 0.37, 0.46, 1)
+theme_override_font_sizes/font_size = 16
+text = "="

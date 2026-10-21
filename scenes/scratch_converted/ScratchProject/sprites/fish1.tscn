@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://cqu8vtwqnnyy1"]
+
+[ext_resource type="Script" path="res://scenes/scratch_converted/ScratchProject/sprites/fish1.gd" id="1_3ff0m"]
+[ext_resource type="Script" uid="uid://bm4lvudded1ny" path="res://addons/scratch_converter/core/runtime/scratch_costume.gd" id="2_gq8sr"]
+[ext_resource type="Texture2D" uid="uid://ducxdsvn523eh" path="res://scenes/scratch_converted/ScratchProject/sprites/assets/fish1/800cf29bb8a1e1bf58eae0513c3f432a_tex.res" id="3_2xvcn"]
+
+[sub_resource type="Resource" id="Resource_xjfc4"]
+script = ExtResource("2_gq8sr")
+name = "fishTile_079"
+texture = ExtResource("3_2xvcn")
+rotation_center = Vector2(32, 32)
+hitbox_polygon = PackedVector2Array(9, -23, 5, -22, 1, -22, -8, -16, -10, -16, -10, -10, -10, -8, -15, -11, -15, -12, -21, -11, -23, -11, -29, -1, -30, -1, -29, 5, -29, 7, -21, 15, -21, 16, -16, 16, -12, 12, -11, 12, -7, 20, -7, 21, 2, 23, 2, 24, 16, 24, 18, 20, 23, 20, 30, 9, 30, -5, 23, -16, 21, -16, 20, -22, 20, -24, 9, -24)
+hitbox_polygons = Array[PackedVector2Array]([PackedVector2Array(9, -23, 5, -22, 1, -22, -8, -16, -10, -16, -10, -10, -10, -8, -15, -11, -15, -12, -21, -11, -23, -11, -29, -1, -30, -1, -29, 5, -29, 7, -21, 15, -21, 16, -16, 16, -12, 12, -11, 12, -7, 20, -7, 21, 2, 23, 2, 24, 16, 24, 18, 20, 23, 20, 30, 9, 30, -5, 23, -16, 21, -16, 20, -22, 20, -24, 9, -24)])
+
+[node name="fish1" type="Node2D" unique_id=1230415712]
+position = Vector2(-67.2498, -92.31046)
+script = ExtResource("1_3ff0m")
+costumes = Array[ExtResource("2_gq8sr")]([SubResource("Resource_xjfc4")])
+direction = -93.6802453945171
+rotation_style = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=406521339]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=2097601537]
